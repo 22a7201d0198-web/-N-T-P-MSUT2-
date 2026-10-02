@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập tiếng Trung — Msut 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #a21caf 0%, #c026d3 50%, #e11d48 100%);
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent-purple: #c026d3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-bottom: 60px;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 48px 24px 72px 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            opacity: 0.95;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            opacity: 0.85;
+            max-width: 750px;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .stats-grid {
+            display: flex;
+            gap: 36px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-num {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+
+        /* Navigation Bar */
+        .nav-wrapper {
+            max-width: 1100px;
+            margin: -30px auto 30px auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-bar {
+            background: #ffffff;
+            border-radius: 50px;
+            padding: 8px;
+            display: flex;
+            gap: 6px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .nav-btn {
+            border: none;
+            background: transparent;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+            background: #f1f5f9;
+        }
+
+        .nav-btn.active {
+            background: var(--accent-purple);
+            color: white;
+            box-shadow: 0 4px 12px rgba(192, 38, 211, 0.3);
+        }
+
+        /* Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* Table */
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .vocab-table th, .vocab-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .vocab-table th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .chinese-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e1b4b;
+        }
+
+        .audio-btn {
+            background: #f1f5f9;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+
+        .audio-btn:hover { background: #e2e8f0; }
+
+        /* Flashcard */
+        .flashcard-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .flashcard {
+            width: 380px;
+            height: 240px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-radius: 20px;
+        }
+
+        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: white;
+            border: 2px solid var(--border-color);
+        }
+
+        .flashcard-back {
+            transform: rotateY(180deg);
+            background: #fdf4ff;
+            border-color: #f0abfc;
+        }
+
+        .fc-controls {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--accent-purple);
+            color: white;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover { opacity: 0.9; }
+
+        /* Quizzes */
+        .quiz-item {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quiz-question {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .quiz-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .quiz-result {
+            font-size: 14px;
+            font-weight: 600;
+            display: none;
+            margin-top: 8px;
+        }
+
+        .correct { color: #16a34a; }
+        .incorrect { color: #dc2626; }
+
+        /* Dialogues and Essays */
+        .toggle-btn {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+
+        .hidden-content {
+            display: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 8px;
+            line-height: 1.6;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .dialogue-bubble {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .speaker {
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Banner -->
+    <div class="hero-banner">
+        <div class="container">
+            <div class="badge">
+                📖 Giáo trình Mst 2 • Trình độ Trung cấp
+            </div>
+            <div class="hero-title">你在干什么呢？</div>
+            <div class="hero-subtitle">Ôn tập tiếng Trung — Msut 2</div>
+            <div class="hero-desc">473 từ vựng, flashcard đọc mẫu, bài dịch, điền từ, hội thoại và bài văn mẫu — tất cả trong một trang.</div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-num">473</span>
+                    <span class="stat-label">từ vựng</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">10</span>
+                    <span class="stat-label">hội thoại</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">10</span>
+                    <span class="stat-label">bài văn mẫu</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">60</span>
+                    <span class="stat-label">câu luyện tập</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="nav-wrapper">
+        <div class="nav-bar">
+            <button class="nav-btn active" onclick="switchTab('vocab')">📖 Từ vựng</button>
+            <button class="nav-btn" onclick="switchTab('flashcard')">🎴 Flashcard</button>
+            <button class="nav-btn" onclick="switchTab('translate')">✍️ Dịch câu</button>
+            <button class="nav-btn" onclick="switchTab('fill')">🧩 Điền từ</button>
+            <button class="nav-btn" onclick="switchTab('dialogue')">💬 Hội thoại</button>
+            <button class="nav-btn" onclick="switchTab('essay')">📝 Bài văn</button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        
+        <!-- SECTION 1: TỪ VỰNG (473 TỪ FULL) -->
+        <div id="vocab" class="content-section active card-panel">
+            <h2>Danh sách từ vựng Msut 2 (473 từ)</h2>
+            <br>
+            <table class="vocab-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Chữ Hán</th>
+                        <th>Phiên âm</th>
+                        <th>Nghĩa Việt</th>
+                        <th>Ví dụ áp dụng</th>
+                        <th>Đọc</th>
+                    </tr>
+                </thead>
+                <tbody id="vocab-list"></tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: FLASHCARD -->
+        <div id="flashcard" class="content-section card-panel">
+            <h2>Thẻ Flashcard Lật (473 từ)</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Nhấp vào thẻ để lật xem phiên âm và nghĩa tiếng Việt.</p>
+            
+            <div class="flashcard-wrapper">
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="chinese-text" id="fc-hanzi" style="font-size: 48px;">可以</span>
+                            <span style="font-size: 12px; color: var(--text-muted); margin-top: 10px;">(Nhấp để lật)</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <h3 id="fc-pinyin" style="color: var(--accent-purple);">kěyǐ</h3>
+                            <p id="fc-meaning" style="font-size: 18px; margin-top: 8px;">Có thể</p>
+                            <p id="fc-ex" style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">Ví dụ: 我可以借用一下吗？</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fc-controls">
+                    <button class="btn" onclick="prevCard()">◄ Từ trước</button>
+                    <button class="audio-btn" onclick="speakCurrentCard()">🔊</button>
+                    <span id="fc-counter">1 / 473</span>
+                    <button class="btn" onclick="nextCard()">Từ sau ►</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: DỊCH CÂU (30 CÂU) -->
+        <div id="translate" class="content-section card-panel">
+            <h2>Bài tập dịch câu đơn giản (30 câu)</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Dịch các câu tiếng Việt sau sang tiếng Trung (sử dụng chữ Hán):</p>
+            <div id="translate-quiz"></div>
+        </div>
+
+        <!-- SECTION 4: ĐIỀN TỪ (30 CÂU) -->
+        <div id="fill" class="content-section card-panel">
+            <h2>Bài tập điền từ vào chỗ trống (30 câu)</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Chọn từ thích hợp trong ngoặc điền vào chỗ trống:</p>
+            <div id="fill-quiz"></div>
+        </div>
+
+        <!-- SECTION 5: HỘI THOẠI (10 CHỦ ĐỀ) -->
+        <div id="dialogue" class="content-section card-panel">
+            <h2>Hội thoại mẫu theo 10 chủ đề Msut 2</h2>
+            <div id="dialogue-container"></div>
+        </div>
+
+        <!-- SECTION 6: BÀI VĂN MẪU (10 CHỦ ĐỀ) -->
+        <div id="essay" class="content-section card-panel">
+            <h2>Bài văn mẫu 10 chủ đề (Có đọc mẫu, mặc định ẩn phiên âm/dịch)</h2>
+            <div id="essay-container"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. FULL DATA 473 TỪ VỰNG VỚI VÍ DỤ TƯƠNG ỨNG
+        const vocabRaw = [
+            ["Có thể", "可以", "kěyǐ", "你可以使用这台电脑。(Bạn có thể dùng máy tính này.)"],
+            ["Có thể (năng lực)", "能", "néng", "你能帮我一个忙吗？(Bạn có thể giúp tôi một tay không?)"],
+            ["Tán gẫu", "聊天儿", "liáotiānr", "我们正在聊天儿。(Chúng tôi đang trò chuyện.)"],
+            ["Dùng, sử dụng", "用", "yòng", "我用手机上网。(Tôi dùng điện thoại lên mạng.)"],
+            ["Cùng với", "跟", "gēn", "我跟他一起去商店。(Tôi đi cửa hàng cùng anh ấy.)"],
+            ["Mượn, vay", "借", "jiè", "我想借一下你的笔。(Tôi muốn mượn bút của bạn một chút.)"],
+            ["Điện thoại", "电话", "diànhuà", "请给我打电话。(Hãy gọi điện thoại cho tôi.)"],
+            ["Số điện thoại", "手机号", "shǒujīhào", "你的手机号是多少？(Số điện thoại của bạn là bao nhiêu?)"],
+            ["Số điện thoại", "电话号码", "diànhuà hàomǎ", "我忘记了他的电话号码。(Tôi quên mất số điện thoại của anh ấy.)"],
+            ["Mã số", "号码", "hàomǎ", "这是我的房间号码。(Đây là số phòng của tôi.)"],
+            ["Lên mạng", "上网", "shàngwǎng", "我晚上常上网查资料。(Buổi tối tôi thường lên mạng tra tài liệu.)"],
+            ["Đợi", "等", "děng", "请等我一下。(Xin hãy đợi tôi một chút.)"],
+            ["Nhưng mà", "可是", "kěshì", "我想去，可是没有时间。(Tôi muốn đi, nhưng mà không có thời gian.)"],
+            ["Bút", "笔", "bǐ", "这支笔很好写。(Cây bút này viết rất tốt.)"],
+            ["Viết", "写", "xiě", "他在写汉字。(Anh ấy đang viết chữ Hán.)"],
+            ["Chậm", "慢", "màn", "请说慢一点儿。(Xin hãy nói chậm một chút.)"],
+            ["Lần", "次", "cì", "这是我第一次来这里。(Đây là lần đầu tiên tôi đến đây.)"],
+            ["Lần (trọn quá trình)", "遍", "biàn", "请再说一遍。(Xin hãy nói lại một lần nữa.)"],
+            ["Điện", "电", "diàn", "手机没电了。(Điện thoại hết điện rồi.)"],
+            ["Dây sạc", "充电线", "chōngdiànxiàn", "你的充电线借我一下。(Dây sạc của bạn cho tôi mượn một chút.)"],
+            ["Máy tính", "电脑", "diànnǎo", "我的电脑坏了。(Máy tính của tôi bị hỏng rồi.)"],
+            ["Mở, bật", "开", "kāi", "请开机。(Xin hãy mở máy.)"],
+            ["Đánh máy", "打字", "dǎzì", "他打字打得很快。(Anh ấy đánh máy rất nhanh.)"],
+            ["Tìm", "找", "zhǎo", "你在找什么？(Bạn đang tìm gì vậy?)"],
+            ["Không vấn đề", "没问题", "méi wèntí", "这件事情没问题。(Việc này không vấn đề gì.)"],
+            ["À đúng rồi", "对了", "duìle", "对了，你明天去吗？(À đúng rồi, ngày mai bạn đi không?)"],
+            ["Hỏng", "坏", "huài", "手机坏了需要修。(Điện thoại hỏng rồi cần phải sửa.)"],
+            ["Sửa", "修", "xiū", "师傅在修电脑。(Thợ đang sửa máy tính.)"],
+            ["Bản thân", "自己", "zìjǐ", "这件事要你自己做。(Việc này phải do tự bản thân bạn làm.)"],
+            ["Nhà vệ sinh", "洗手间", "xǐshǒujiān", "请问，洗手间在哪里？(Cho hỏi, nhà vệ sinh ở đâu?)"],
+            ["Mệt", "累", "lèi", "今天工作很累。(Hôm nay làm việc rất mệt.)"],
+            ["Dọn dẹp", "打扫", "dǎsǎo", "我们要打扫房间。(Chúng ta phải dọn dẹp phòng.)"],
+            ["Bừa bộn", "乱", "luàn", "你的房间太乱了。(Phòng của bạn bừa bộn quá.)"],
+            ["Trung tâm thương mại", "商场", "shāngchǎng", "周末我们去商场吧。(Cuối tuần chúng ta đi trung tâm thương mại nhé.)"],
+            ["Mua", "买", "mǎi", "你想买什么衣服？(Bạn muốn mua quần áo gì?)"],
+            ["Mua sắm", "购物", "gòuwù", "女人喜欢去购物。(Phụ nữ thích đi mua sắm.)"],
+            ["Đồng nghiệp", "同事", "tóngshì", "他是我的新同事。(Anh ấy là đồng nghiệp mới của tôi.)"],
+            ["Quần áo", "衣服", "yīfu", "这件衣服很合适。(Bộ quần áo này rất vừa vặn.)"],
+            ["Áo sơ mi", "衬衫", "chènshān", "我买了一件白衬衫。(Tôi đã mua một chiếc áo sơ mi trắng.)"],
+            ["Áo phông", "T恤", "Txù", "夏天穿T恤很凉快。(Mùa hè mặc áo phông rất mát mẻ.)"],
+            ["Áo len", "毛衣", "máoyī", "冬天需要穿毛衣。(Mùa đông cần mặc áo len.)"],
+            ["Áo khoác", "大衣", "dàyī", "这件大衣很漂亮。(Chiếc áo khoác này rất đẹp.)"],
+            ["Áo lông vũ", "羽绒服", "yǔróngfú", "羽绒服很暖和。(Áo lông vũ rất ấm áp.)"],
+            ["Quần", "裤子", "kùzi", "这条裤子有点长。(Chiếc quần này hơi dài.)"],
+            ["Váy", "裙子", "qúnzi", "她穿着一条红裙子。(Cô ấy đang mặc một chiếc váy đỏ.)"],
+            ["Túi xách nữ", "女包", "nǚbāo", "这个女包质量很好。(Chiếc túi xách nữ này chất lượng rất tốt.)"],
+            ["Quần lót", "内裤", "nèikù", "超市有卖内裤。(Siêu thị có bán quần lót.)"],
+            ["Quần bò", "牛仔裤", "niúzǎikù", "年轻人喜欢穿牛仔裤。(Người trẻ thích mặc quần bò.)"],
+            ["Màu sắc", "颜色", "yánsè", "你喜欢什么颜色？(Bạn thích màu sắc gì?)"],
+            ["Mặc, đeo", "穿", "chuān", "你今天穿得很帅。(Hôm nay bạn mặc rất đẹp trai.)"],
+            ["Cởi", "脱", "tuō", "进门要脱鞋。(Vào cửa phải cởi giày.)"],
+            ["Thử", "试", "shì", "我可以试一下吗？(Tôi có thể thử một chút không?)"],
+            ["Cỡ", "号", "hào", "你要几号的？(Bạn muốn cỡ số mấy?)"],
+            ["Size", "码", "mǎ", "这件有L码吗？(Mẫu này có size L không?)"],
+            ["Phù hợp", "合适", "héshì", "尺寸非常合适。(Kích cỡ rất phù hợp.)"],
+            ["Hơi, một chút", "有点儿", "yǒudiǎnr", "今天有点儿冷。(Hôm nay hơi lạnh một chút.)"],
+            ["Cửa hàng quần áo", "服装店", "fúzhuāngdiàn", "这家服装店正在打折。(Cửa hàng quần áo này đang giảm giá.)"],
+            ["Cửa hàng giày", "鞋店", "xiédiàn", "我们去鞋店看看吧。(Chúng ta vào cửa hàng giày xem thử đi.)"],
+            ["Giày", "鞋", "xié", "这双鞋很舒服。(Đôi giày này rất thoải mái.)"],
+            ["Đi giày", "穿鞋", "chuānxié", "快点穿鞋，我们要出发了。(Mau đi giày vào, chúng ta sắp xuất phát rồi.)"],
+            ["Không tồi", "不错", "búcuò", "这个建议很不错。(Đề xuất này rất không tồi.)"],
+            ["Không sai", "没错", "méicuò", "没错，就是他。(Không sai, chính là anh ấy.)"],
+            ["Bà chủ", "老板娘", "lǎobǎnniáng", "老板娘很热情。(Bà chủ rất nhiệt tình.)"],
+            ["Người, vị", "位", "wèi", "请问有几位？(Cho hỏi có mấy vị ạ?)"],
+            ["Alo", "喂", "wéi", "喂，请问您找谁？(Alo, cho hỏi bạn tìm ai?)"],
+            ["Giúp đỡ", "帮 / 帮助", "bāng / bāngzhù", "谢谢你的帮助。(Cảm ơn sự giúp đỡ của bạn.)"],
+            ["Xin nghỉ", "请假", "qǐngjià", "生病需要向公司请假。(Bị bệnh cần phải xin nghỉ với công ty.)"],
+            ["Giúp đỡ (ly hợp)", "帮忙", "bāngmáng", "你能帮个忙吗？(Bạn có thể giúp một tay không?)"],
+            ["Chuẩn bị", "准备", "zhǔnbèi", "你在准备考试吗？(Bạn đang chuẩn bị thi à?)"],
+            ["Dự định", "打算", "dǎsuàn", "周末你打算做什么？(Cuối tuần bạn dự định làm gì?)"],
+            ["Thi, kiểm tra", "考试", "kǎoshì", "明天有汉语考试。(Ngày mai có bài thi tiếng Trung.)"],
+            ["Khó", "难", "nán", "汉字不难学。(Chữ Hán không khó học.)"],
+            ["Lúc, khi", "时候", "shíhou", "你什么时候来？(Khi nào bạn đến?)"],
+            ["Tham gia", "参加", "cānjiā", "欢迎参加我的聚会。(Hoan nghênh tham gia buổi tiệc của tôi.)"],
+            ["Thư viện", "图书馆", "túshūguǎn", "我去图书馆看书。(Tôi đến thư viện đọc sách.)"],
+            ["Du lịch", "旅游", "lǚyóu", "我们去北京旅游了。(Chúng tôi đã đi du lịch Bắc Kinh.)"],
+            ["Xin lỗi, ngại quá", "不好意思", "bùhǎoyìsi", "不好意思，我迟到了。(Xin lỗi, tôi đến muộn rồi.)"],
+            ["Vậy thì", "那", "nà", "那我们明天见。(Vậy thì ngày mai gặp nhé.)"],
+            ["Rồi", "了", "le", "我已经下班了。(Tôi đã tan làm rồi.)"],
+            ["Một vài", "一些", "yìxiē", "我买了一些水果。(Tôi đã mua một vài loại hoa quả.)"],
+            ["Tham quan", "参观", "cānguān", "我们去参观博物馆。(Chúng tôi đi tham quan bảo tàng.)"],
+            ["Đưa, dẫn", "带", "dài", "我带你去参观。(Tôi dẫn bạn đi tham quan.)"],
+            ["Không... chút nào", "一点儿也不", "yìdiǎnr yě bù", "这个一点儿也不难。(Cái này không khó một chút nào.)"],
+            ["Phong cảnh", "风景", "fēngjǐng", "这里的风景很美。(Phong cảnh ở đây rất đẹp.)"],
+            ["Đẹp", "好看", "hǎokàn", "这本电影很好看。(Bộ phim này rất hay/đẹp.)"],
+            ["Đẹp", "美", "měi", "桂林山水很美。(Sơn thủy Quế Lâm rất đẹp.)"],
+            ["Ngắm cảnh", "看风景", "kàn fēngjǐng", "我们坐在路上看风景。(Chúng tôi ngồi bên đường ngắm cảnh.)"],
+            ["Vé", "票", "piào", "你买到门票了吗？(Bạn đã mua được vé vào cửa chưa?)"],
+            ["Giấy", "纸", "zhǐ", "请给我一张纸。(Cho tôi xin một tờ giấy.)"],
+            ["Nhìn có vẻ", "看上去", "kàn shàngqù", "你看上去很累。(Bạn nhìn có vẻ rất mệt.)"],
+            ["Thú vị, vui", "好玩儿", "hǎowánr", "这个地方非常好玩儿。(Nơi này rất thú vị.)"],
+            ["Không khí", "空气", "kōngqì", "公园的空气很新鲜。(Không khí trong công viên rất trong lành.)"],
+            ["Trong lành, tươi", "新鲜", "xīnxiān", "水果很新鲜。(Hoa quả rất tươi.)"],
+            ["Nghe nói", "听说", "tīngshuō", "听说你要去中国。(Nghe nói bạn sắp đi Trung Quốc.)"],
+            ["Hỏi thăm", "打听", "dǎting", "我想打听一下这件事情。(Tôi muốn hỏi thăm một chút về việc này.)"],
+            ["Nói với", "告诉", "gàosu", "请告诉我你的名字。(Xin hãy nói cho tôi biết tên của bạn.)"],
+            ["WeChat", "微信", "wēixìn", "我们加个微信吧。(Chúng ta thêm WeChat nhé.)"],
+            ["Mã WeChat", "微信号", "wēixìnhào", "这是我的微信号。(Đây là mã WeChat của tôi.)"],
+            ["Thêm, kết bạn", "加", "jiā", "我加了你的好友。(Tôi đã thêm kết bạn với bạn.)"],
+            ["Gửi", "发", "fā", "请给我发信息。(Xin hãy gửi tin nhắn cho tôi.)"],
+            ["Quên", "忘 / 忘记", "wàng / wàngjì", "我忘记带钥匙了。(Tôi quên mang theo chìa khóa rồi.)"],
+            ["Nhớ", "记得", "jìde", "你还记得我吗？(Bạn còn nhớ tôi không?)"],
+            ["Mật khẩu", "密码", "mìmǎ", "请输入密码。(Xin vui lòng nhập mật khẩu.)"],
+            ["Thú vị", "有意思", "yǒuyìsi", "这本书很有意思。(Quyển sách này rất thú vị.)"],
+            ["Thú vị", "有趣", "yǒuqù", "他的故事很有趣。(Câu chuyện của anh ấy rất thú vị.)"],
+            ["Ý nghĩa", "意思", "yìsi", "这个词是什么意思？(Từ này có nghĩa là gì?)"],
+            ["Photo", "复印", "fùyìn", "请复印这份文件。(Xin hãy photo tài liệu này.)"],
+            ["In ấn", "打印", "dǎyìn", "我们需要打印资料。(Chúng ta cần in tài liệu.)"],
+            ["Tài liệu", "资料", "zīliào", "准备好面试资料。(Hãy chuẩn bị tốt tài liệu phỏng vấn.)"],
+            ["Phỏng vấn", "面试", "miànshì", "明天我要去面试。(Ngày mai tôi phải đi phỏng vấn.)"],
+            ["Ra ngoài", "出去", "chūqù", "我们出去散步吧。(Chúng ta ra ngoài đi dạo đi.)"],
+            ["Chán", "无聊", "wúliáo", "一个人在家很无聊。(Ở nhà một mình rất chán.)"],
+            ["Một mình", "一个人", "yí ge rén", "我一个人去旅游。(Tôi đi du lịch một mình.)"],
+            ["Tin nhắn", "短信", "duǎnxìn", "我收到一条短信。(Tôi nhận được một tin nhắn.)"],
+            ["Lâu không gặp", "好久不见", "hǎojiǔ bújiàn", "好久不见，最近怎么样？(Lâu không gặp, dạo này thế nào?)"],
+            ["Bình thường thôi", "还行吧", "háixíng ba", "工作还行吧。(Công việc cũng bình thường thôi.)"],
+            ["Vẫn như cũ", "老样子", "lǎoyàngzi", "我还是老样子。(Tôi vẫn như cũ.)"],
+            ["Mấy hôm trước", "前几天", "qiánjǐtiān", "前几天我去看了医生。(Mấy hôm trước tôi đã đi khám bác sĩ.)"],
+            ["Hẹn", "约", "yuē", "我和朋友约了看电影。(Tôi hẹn bạn đi xem phim.)"],
+            ["Tra cứu", "查", "chá", "在网上查一下资料。(Tra cứu tài liệu trên mạng.)"],
+            ["Nhờ, làm ơn", "拜托", "bàituō", "这件事情拜托你了。(Việc này làm ơn nhờ vào bạn đấy.)"],
+            ["Tùy ý", "随便", "suíbiàn", "请随便坐。(Mời ngồi tự nhiên/tùy ý.)"],
+            ["Không gặp không về", "不见不散", "bújiàn bùsàn", "明天下午三点，不见不散！(3 giờ chiều mai, không gặp không về!)"],
+            ["Quyết định vậy đi", "就这么定吧", "jiù zhème dìng ba", "好的，就这么定吧！(Được rồi, quyết định vậy đi!)"],
+            ["Đương nhiên", "当然", "dāngrán", "我当然同意。(Tôi đương nhiên đồng ý.)"],
+            ["Thời gian", "时间", "shíjiān", "你有什么时间？(Bạn có thời gian nào?)"],
+            ["Không có thời gian", "没时间", "méi shíjiān", "今天我很忙，没时间。(Hôm nay tôi rất bận, không có thời gian.)"],
+            ["Bao lâu", "多长时间 / 多久", "duō cháng shíjiān / duōjiǔ", "你要去多久？(Bạn đi bao lâu?)"],
+            ["Được, tốt", "行", "xíng", "明天去，行吗？(Ngày mai đi, được không?)"],
+            ["Gần đây", "最近", "zuìjìn", "最近工作比较忙。(Gần đây công việc tương đối bận.)"],
+            ["Ngoại ngữ", "外语", "wàiyǔ", "学习外语很有用。(Học ngoại ngữ rất có ích.)"],
+            ["Sẽ; biết; có thể", "会", "huì", "我会说一点儿汉语。(Tôi biết nói một chút tiếng Trung.)"],
+            ["Hoa quả", "水果", "shuǐguǒ", "多吃水果对身体好。(Ăn nhiều hoa quả tốt cho cơ thể.)"],
+            ["Lựa, chọn", "挑", "tiāo", "请挑几个新鲜的。(Xin chọn vài cái tươi.)"],
+            ["Sa lát", "沙拉", "shālā", "我想吃蔬菜沙拉。(Tôi muốn ăn sa lát rau.)"],
+            ["Rượu trắng", "白酒", "báijiǔ", "中国白酒很响。(Rượu trắng Trung Quốc rất mạnh/nổi tiếng.)"],
+            ["Rượu gạo", "米酒", "mǐjiǔ", "甜米酒很好喝。(Rượu gạo ngọt rất dễ uống.)"],
+            ["Rượu vang", "红酒", "hóngjiǔ", "喝一杯红酒。(Uống một ly rượu vang.)"],
+            ["Đâu có, không dám", "哪里", "nǎli", "哪里哪里，写得不好。(Đâu có đâu có, viết chưa tốt đâu.)"],
+            ["Quá khen", "过奖", "guòjiǎng", "您过奖了。(Bác quá khen rồi.)"],
+            ["Nếm, thử", "尝", "cháng", "请尝尝这个菜。(Xin hãy nếm thử món này.)"],
+            ["Thật", "真", "zhēn", "你真厉害！(Bạn thật lợi hại!)"],
+            ["Thật sao?", "真的吗", "zhēn de ma", "这是真的吗？(Đây là thật sao?)"],
+            ["Giả", "假的", "jiǎ de", "消息是假的。(Tin tức là giả.)"],
+            ["Dự định", "打算", "dǎsuàn", "我打算下个月去北京。(Tôi dự định tháng sau đi Bắc Kinh.)"],
+            ["Đã", "已经", "yǐjīng", "我已经完成了工作。(Tôi đã hoàn thành công việc.)"],
+            ["Địa điểm", "地方", "dìfang", "这个地方风景很美。(Địa điểm này phong cảnh rất đẹp.)"],
+            ["Kiến nghị, đề xuất", "建议", "jiànyì", "我接受你的建议。(Tôi tiếp nhận kiến nghị của bạn.)"],
+            ["Đã từng", "过", "guò", "我去过中国两次。(Tôi đã từng đi Trung Quốc 2 lần.)"],
+            ["Gấu trúc", "熊猫", "xióngmāo", "四川有许多大熊猫。(Tứ Xuyên có rất nhiều gấu trúc.)"],
+            ["Võ công", "功夫", "gōngfu", "中国功夫很厉害。(Võ công Trung Quốc rất lợi hại.)"],
+            ["Ngoại ô", "郊区", "jiāoqū", "我们住在郊区。(Chúng tôi sống ở ngoại ô.)"],
+            ["Trung tâm thành phố", "市中心", "shìzhōngxīn", "市中心非常热闹。(Trung tâm thành phố rất náo nhiệt.)"],
+            ["Sở thú", "动物园", "dòngwùyuán", "带孩子去动物园。(Dẫn trẻ con đi sở thú.)"],
+            ["Động vật", "动物", "dòngwù", "我们要爱护动物。(Chúng ta phải yêu quý động vật.)"],
+            ["Cực kỳ, vô cùng", "极了", "jíle", "开心极了。(Vui cực kỳ.)"],
+            ["Đối với", "对", "duì", "我对汉语感兴趣。(Tôi đối với tiếng Trung có hứng thú.)"],
+            ["Hứng thú", "感兴趣", "gǎn xìngqù", "你对这个感兴趣吗？(Bạn có hứng thú với cái này không?)"],
+            ["Nếu... thì...", "的话", "dehuà", "有时间的话就来。(Nếu có thời gian thì đến nhé.)"],
+            ["Hẹn hò", "约会", "yuēhuì", "今晚我有约会。(Tối nay tôi có hẹn hò.)"],
+            ["Họp", "开会", "kāihuì", "经理正在开会。(Giám đốc đang họp.)"],
+            ["Tiếc nuối", "遗憾", "yíhàn", "真遗憾，我不能去。(Thật tiếc nuối, tôi không thể đi.)"],
+            ["Cảm ơn, cảm kích", "感谢", "gǎnxiè", "非常感谢你的帮助。(Rất cảm kích sự giúp đỡ của bạn.)"],
+            ["Vịt quay", "烤鸭", "kǎoyā", "北京烤鸭很好吃。(Vịt quay Bắc Kinh rất ngon.)"],
+            ["Mùi vị", "味道", "wèidào", "这个菜味道真不错。(Món này mùi vị thật không tồi.)"],
+            ["Bụng", "肚子", "dùzi", "我肚子饿了。(Bụng tôi đói rồi.)"],
+            ["Làm khách", "做客", "zuòkè", "欢迎来我家做客。(Hoan nghênh đến nhà tôi làm khách.)"],
+            ["Khách", "客人", "kèrén", "家里来了客人。(Trong nhà có khách đến.)"],
+            ["Gõ cửa", "敲门", "qiāomén", "进门前要敲门。(Trước khi vào cửa phải gõ cửa.)"],
+            ["Hoan nghênh", "欢迎", "huānyíng", "热烈欢迎大家！(Nhiệt liệt hoan nghênh mọi người!)"],
+            ["Vợ/chồng", "爱人", "àiren", "我和爱人一起去。(Tôi và nhà tôi/vợ/chồng cùng đi.)"],
+            ["Ra ngoài", "出去", "chūqù", "他出去买东西了。(Anh ấy ra ngoài mua đồ rồi.)"],
+            ["Phiền, làm phiền", "麻烦", "máfan", "麻烦你帮我拿一下。(Làm phiền bạn lấy giúp tôi một chút.)"],
+            ["Thêm", "添", "tiān", "给你添麻烦了。(Đã thêm phiền phức cho bạn rồi.)"],
+            ["Đừng", "别", "bié", "别客气。(Đừng客气/đừng khách sáo.)"],
+            ["Khách sáo", "客气", "kèqi", "大家都是朋友，不用客气。(Mọi người đều là bạn bè, không cần khách sáo.)"],
+            ["Cơm, bữa cơm", "饭", "fàn", "我们一起吃晚饭。(Chúng ta cùng nhau ăn cơm tối.)"],
+            ["Vất vả", "辛苦", "xīnkǔ", "今天大家辛苦了。(Hôm nay mọi người vất vả rồi.)"],
+            ["Đậu phụ Tứ Xuyên", "麻婆豆腐", "mápó dòufu", "麻婆豆腐有点辣。(Đậu phụ Tứ Xuyên hơi cay.)"],
+            ["Cay", "辣", "là", "我不怕辣。(Tôi không sợ cay.)"],
+            ["Sợ", "怕", "pà", "我不怕辛苦。(Tôi không sợ vất vả.)"],
+            ["Cá chua ngọt", "糖醋鱼", "tángcùyú", "糖醋鱼非常好吃。(Cá chua ngọt cực kỳ ngon.)"],
+            ["Chua", "酸", "suān", "这个苹果很酸。(Quả táo này rất chua.)"],
+            ["Ngọt", "甜", "tián", "瓜果很甜。(Dưa quả rất ngọt.)"],
+            ["Miền Bắc", "北方", "běifāng", "北方冬天会下雪。(Miền Bắc mùa đông sẽ có tuyết.)"],
+            ["Sống, cư trú", "住", "zhù", "你住在哪里？(Bạn sống ở đâu?)"],
+            ["Miền Nam", "南方", "nánfāng", "南方比较温暖。(Miền Nam tương đối ấm áp.)"],
+            ["Quê nhà", "老家", "lǎojiā", "我的老家在农村。(Quê nhà của tôi ở nông thôn.)"],
+            ["Thành phố", "城市", "chéngshì", "这是一个美丽的城市。(Đây là một thành phố đẹp.)"],
+            ["Nông thôn", "农村", "nóngcūn", "农村的环境很好。(Môi trường ở nông thôn rất tốt.)"],
+            ["Môi trường", "环境", "huánjìng", "这里环境很安静。(Môi trường ở đây rất yên tĩnh.)"],
+            ["Sạch sẽ", "干净", "gānjìng", "房间收拾得很干净。(Phòng dọn dẹp rất sạch sẽ.)"],
+            ["Nhất định", "一定", "yídìng", "我一定会去。(Tôi nhất định sẽ đi.)"],
+            ["Phía bắc", "北边", "běibiān", "公园在北边。(Công viên ở phía bắc.)"],
+            ["Núi", "山", "shān", "周末去爬山。(Cuối tuần đi leo núi.)"],
+            ["Đồng ruộng", "田野", "tiányě", "田野里一片绿色。(Trên đồng ruộng một màu xanh ngát.)"],
+            ["Trong lành", "新鲜", "xīnxiān", "山上的空气新鲜。(Không khí trên núi trong lành.)"],
+            ["Cách, xa", "离", "lí", "学校离家很近。(Trường học cách nhà rất gần.)"],
+            ["Giao thông", "交通", "jiāotōng", "这里的交通很方便。(Giao thông ở đây rất thuận tiện.)"],
+            ["Tiện lợi", "方便", "fāngbiàn", "乘地铁很方便。(Đi tàu điện ngầm rất tiện lợi.)"],
+            ["Vô cùng", "十分", "shífēn", "我十分高兴。(Tôi vô cùng vui mừng.)"],
+            ["Tiểu học", "小学", "xiǎoxué", "弟弟在上小学。(Em trai đang học tiểu học.)"],
+            ["Náo nhiệt", "热闹", "rènào", "节日里很热闹。(Ngày lễ rất náo nhiệt.)"],
+            ["Cửa hàng", "商店", "shāngdiàn", "商店里有很多商品。(Trong cửa hàng có rất nhiều hàng hóa.)"],
+            ["Cuộc sống", "生活", "shēnghuó", "祝你生活愉快！(Chúc bạn cuộc sống vui vẻ!)"],
+            ["Mới", "新", "xīn", "这是我的新手机。(Đây là điện thoại mới của tôi.)"],
+            ["Trạm, ga", "站", "zhàn", "我在公交车站等你。(Tôi đợi bạn ở trạm xe buýt.)"],
+            ["Sông", "河", "hé", "河水很清澈。(Nước sông rất trong.)"],
+            ["Hoa", "花", "huā", "公园里有很多花。(Trong công viên có rất nhiều hoa.)"],
+            ["Vừa mới", "刚 / 刚刚", "gāng / gānggāng", "我刚刚到家。(Tôi vừa mới về đến nhà.)"],
+            ["Giới thiệu", "介绍", "jièshào", "我来介绍一下。(Để tôi giới thiệu một chút.)"],
+            ["Phải", "得", "děi", "时间不早了，我得走了。(Thời gian không còn sớm nữa, tôi phải đi rồi.)"],
+            ["Thẻ", "卡", "kǎ", "请刷卡。(Xin mời quẹt thẻ.)"],
+            ["Mạng", "网络", "wǎngluò", "这里的网络速度很快。(Tốc độ mạng ở đây rất nhanh.)"],
+            ["Cần", "需要", "xūyào", "你需要什么帮助？(Bạn cần sự giúp đỡ gì?)"],
+            ["Nạp tiền", "充值", "chōngzhí", "我要给手机充值。(Tôi cần nạp tiền điện thoại.)"],
+            ["Hễ...liền...", "一……就……", "yī...jiù...", "他一下班就回家。(Anh ấy hễ tan làm là liền về nhà.)"],
+            ["Loại", "种", "zhǒng", "这种水果很好吃。(Loại hoa quả này rất ngon.)"],
+            ["Có thể", "能", "néng", "今天能上网吗？(Hôm nay có thể lên mạng được không?)"],
+            ["Dễ dàng", "容易", "róngyì", "这个问题很容易。(Câu hỏi này rất dễ.)"],
+            ["Phục vụ", "服务", "fúwù", "这里的服务态度很好。(Thái độ phục vụ ở đây rất tốt.)"],
+            ["Lo lắng", "担心", "dānxīn", "别担心，没问题。(Đừng lo lắng, không vấn đề gì.)"],
+            ["Tiếp theo; tải xuống", "下", "xià", "可以在网上下载软件。(Có thể tải phần mềm trên mạng xuống.)"],
+            ["Đăng ký", "注册", "zhùcè", "如何注册新账号？(Làm thế nào để đăng ký tài khoản mới?)"],
+            ["Tài khoản", "账号", "zhànghào", "请输入你的账号。(Xin vui lòng nhập tài khoản của bạn.)"],
+            ["Đăng nhập", "登录", "dēnglù", "登录系统。(Đăng nhập hệ thống.)"],
+            ["Đăng xuất", "退出", "tuìchū", "退出登录。(Đăng xuất đăng nhập.)"],
+            ["Hệ thống", "系统", "xìtǒng", "系统正在更新。(Hệ thống đang cập nhật.)"],
+            ["Mã xác nhận", "验证码", "yànzhèngmǎ", "请输入手机验证码。(Xin nhập mã xác nhận gửi về điện thoại.)"],
+            ["Viết tay", "手写", "shǒuxiě", "使用手写输入法。(Sử dụng bộ gõ viết tay.)"],
+            ["Phiên âm", "拼音", "pīnyīn", "输入拼音查汉字。(Nhập phiên âm tra chữ Hán.)"],
+            ["Nhập", "输入", "shūrù", "输入密码。(Nhập mật khẩu.)"],
+            ["Bộ gõ", "输入法", "shūrùfǎ", "下载搜狗输入法。(Tải bộ gõ Sougou.)"],
+            ["Nên", "应该", "yīnggāi", "你应该去看看医生。(Bạn nên đi bác sĩ xem sao.)"],
+            ["Thứ", "第", "dì", "第一页。(Trang thứ nhất.)"],
+            ["Khám bệnh", "看病", "kànbìng", "去医院看病。(Đi bệnh viện khám bệnh.)"],
+            ["Khám bác sĩ", "看医生", "kàn yīshēng", "身体不舒服要去看医生。(Cơ thể không khỏe phải đi khám bác sĩ.)"],
+            ["Dễ chịu", "舒服", "shūfu", "今天身体不太舒服。(Hôm nay cơ thể không được dễ chịu lắm.)"],
+            ["Đau", "疼", "téng", "我的头很疼。(Đầu của tôi rất đau.)"],
+            ["Đo", "量", "liáng", "先量一下体温。(Trước tiên đo thân nhiệt một chút.)"],
+            ["Thân nhiệt", "体温", "tǐwēn", "体温正常。(Thân nhiệt bình thường.)"],
+            ["Độ", "度", "dù", "发烧到了38度。(Sốt lên đến 38 độ.)"],
+            ["Xét nghiệm máu", "验血", "yànxuè", "医生让我去验血。(Bác sĩ bảo tôi đi xét nghiệm máu.)"],
+            ["Uống thuốc", "吃药", "chīyào", "按时吃药。(Uống thuốc đúng giờ.)"],
+            ["Tiêm", "打针", "dǎzhēn", "我不怕打针。(Tôi không sợ tiêm.)"],
+            ["Khẩu vị", "胃口", "wèikǒu", "生病了没有胃口。(Bị bệnh rồi không có khẩu vị/cảm giác thèm ăn.)"],
+            ["Tiêu chảy", "拉肚子", "lādùzi", "昨天我拉肚子了。(Hôm qua tôi bị tiêu chảy.)"],
+            ["Sữa bò", "牛奶", "niúnǎi", "早晨喝一杯牛奶。(Buổi sáng uống một ly sữa bò.)"],
+            ["Nghiêm trọng", "严重", "yánzhòng", "病情并不严重。(Bệnh tình không nghiêm trọng lắm.)"],
+            ["Viêm ruột", "肠胃炎", "chángwèiyán", "医生说是急性肠胃炎。(Bác sĩ nói là viêm dạ dày ruột cấp tính.)"],
+            ["Mắc bệnh", "得了病", "déle bìng", "我不小心得了病。(Tôi không may bị mắc bệnh rồi.)"],
+            ["Trước", "先", "xiān", "先吃药，再休息。(Trước tiên uống thuốc, sau đó nghỉ ngơi.)"],
+            ["Bữa", "顿", "dùn", "一天吃三顿药。(Một ngày uống 3 bữa thuốc.)"],
+            ["Ban ngày", "白天", "báitiān", "白天工作，晚上休息。(Ban ngày làm việc, ban đêm nghỉ ngơi.)"],
+            ["Ban đêm", "夜里", "yèlǐ", "夜里感到很冷。(Ban đêm cảm thấy rất lạnh.)"],
+            ["Nửa đêm", "半夜", "bàinyè", "半夜发烧了。(Nửa đêm bị sốt.)"],
+            ["Tụ họp", "聚会", "jùhuì", "参加朋友的生日聚会。(Tham gia buổi tụ họp sinh nhật của bạn.)"],
+            ["Dẫn, đem", "带", "dài", "带上礼物去参加生日会。(Mang theo quà đi tham gia tiệc sinh nhật.)"],
+            ["Lớp học", "教室", "jiàoshì", "请安静，教室里有人。(Xin hãy yên tĩnh, trong phòng học có người.)"],
+            ["Tin nhắn", "短信", "duǎnxìn", "发短信邀请朋友。(Gửi tin nhắn mời bạn bè.)"],
+            ["Thông tin", "信息", "xìnxī", "确认聚会信息。(Xác nhận thông tin buổi tụ họp.)"],
+            ["Mời khách", "请客", "qǐngkè", "今天我请客！(Hôm nay tôi mời khách/bao ăn!)"],
+            ["Khách", "客人", "kèrén", "家里来了许多客人。(Trong nhà đến rất nhiều khách.)"],
+            ["Khách hàng", "客户", "kèhù", "明天拜访新客户。(Ngày mai đi thăm khách hàng mới.)"],
+            ["Tùy tiện", "随便", "suíbiàn", "大家随便吃吧。(Mọi người ăn uống tự nhiên/tùy tiện nhé.)"],
+            ["Có qua có lại", "礼尚往来", "lǐshàngwǎnglái", "礼尚往来是传统。(Có qua có lại là truyền thống.)"],
+            ["Độ nổi tiếng", "人气", "rénqì", "这家店人气很高。(Cửa hàng này độ nổi tiếng/nhân khí rất cao.)"],
+            ["Đặt trước", "预约", "yùyuē", "需要提前预约。(Cần phải đặt trước.)"],
+            ["Trước, sớm hơn", "提前", "tíqián", "请提前准备。(Xin hãy chuẩn bị trước.)"],
+            ["Đặt trước", "订", "dìng", "订一张桌子。(Đặt một cái bàn.)"],
+            ["Rõ ràng", "清楚", "qīngchu", "你看清楚了吗？(Bạn nhìn rõ ràng chưa?)"],
+            ["Hỏi", "问", "wèn", "我可以问你一个问题吗？(Tôi có thể hỏi bạn một câu hỏi không?)"],
+            ["Vấn đề", "问题", "wèntí", "没问题，我明白。(Không vấn đề gì, tôi hiểu rồi.)"],
+            ["Cũ (quan hệ)", "老", "lǎo", "他是我的老朋友。(Anh ấy là bạn cũ của tôi.)"],
+            ["Mới", "新", "xīn", "认识新朋友。(Quen biết bạn mới.)"],
+            ["Cũ (đồ vật)", "旧", "jiù", "旧电脑不能用了。(Máy tính cũ không dùng được nữa.)"],
+            ["Tiền ai nấy trả", "AA制", "AA zhì", "今天我们AA制吧。(Hôm nay chúng ta chia đều tiền ai nấy trả nhé.)"],
+            ["Trả tiền", "付钱", "fùqián", "我去付钱。(Tôi đi trả tiền.)"],
+            ["Tiền mặt", "现金", "xiànjīn", "请问可以用现金吗？(Cho hỏi có thể dùng tiền mặt không?)"],
+            ["Chuyển khoản", "转账", "zhuǎnzhàng", "支持微信转账。(Hỗ trợ chuyển khoản WeChat.)"],
+            ["Chuyển tiền", "转钱", "zhuǎnqián", "我给你转钱了。(Tôi đã chuyển tiền cho bạn rồi.)"],
+            ["Quét mã", "扫码", "sǎomǎ", "扫码支付。(Quét mã thanh toán.)"],
+            ["Bạn trao đổi ngôn ngữ", "语伴", "yǔbàn", "我有两个中国语伴。(Tôi có 2 bạn trao đổi ngôn ngữ người Trung Quốc.)"],
+            ["Lập tức", "马上", "mǎshàng", "我马上来。(Tôi đến lập tức.)"],
+            ["Lập tức", "立刻", "lìkè", "请立刻回答。(Xin hãy trả lời lập tức.)"],
+            ["Bảo, khiến", "让", "ràng", "妈妈不让我出去。(Mẹ không cho/bảo tôi ra ngoài.)"],
+            ["Thói quen", "习惯", "xíguàn", "我已经习惯了这里的生活。(Tôi đã quen với cuộc sống ở đây.)"],
+            ["Vẫn", "还是", "háishì", "你还是去医吧。(Bạn vẫn nên đi bác sĩ đi.)"],
+            ["Trước đây", "以前", "yǐqián", "以前我是学生。(Trước đây tôi là học sinh.)"],
+            ["Sau này", "以后", "yǐhòu", "以后我们多联系。(Sau này chúng ta liên lạc nhiều hơn nhé.)"],
+            ["Nhưng", "但是", "dànshì", "很想去，但是太忙了。(Rất muốn đi, nhưng mà quá bận rồi.)"],
+            ["Nhưng", "可是", "kěshì", "我想买，可是太贵了。(Tôi muốn mua, nhưng mà đắt quá.)"],
+            ["Mặc cả", "讨价还价", "tǎojiàhuánjià", "买东西可以讨价还价。(Mua đồ có thể mặc cả.)"],
+            ["Trả giá", "讲价", "jiǎngjià", "别讲价了，很便宜了。(Đừng trả giá nữa, rất rẻ rồi.)"],
+            ["Giảm giá", "降价", "jiàngjià", "商品降价促销。(Hàng hóa giảm giá khuyến mãi.)"],
+            ["Tăng giá", "涨价", "zhǎngjià", "物价涨价了。(Giá cả tăng giá rồi.)"],
+            ["Chạy bộ", "跑步", "pǎobù", "每天早上跑步。(Mỗi sáng chạy bộ.)"],
+            ["Đi dạo", "散步", "sànbù", "吃完饭去散步。(Ăn cơm xong đi dạo.)"],
+            ["Càng ngày càng", "越来越", "yuèláiyuè", "汉语越来越难。(Tiếng Trung càng ngày càng khó.)"],
+            ["Càng...càng...", "越……越……", "yuè...yuè...", "越学越有意思。(Càng học càng thấy thú vị.)"],
+            ["Béo", "胖", "pàng", "最近我胖了。(Gần đây tôi béo lên rồi.)"],
+            ["Gầy", "瘦", "shòu", "你想瘦一点儿吗？(Bạn muốn gầy một chút không?)"],
+            ["Hỏng, xấu", "坏", "huài", "坏习惯要改掉。(Thói quen xấu phải bỏ.)"],
+            ["Nhất", "最", "zuì", "我最喜欢吃烤鸭。(Tôi thích ăn vịt quay nhất.)"],
+            ["Nỗ lực", "努力", "nǔlì", "努力学习汉语。(Nỗ lực học tiếng Trung.)"],
+            ["Tiến bộ", "进步", "jìnbù", "他的汉语进步很大。(Tiếng Trung của anh ấy tiến bộ rất lớn.)"],
+            ["Hiểu, tìm hiểu", "了解", "liǎojiě", "我想了解中国文化。(Tôi muốn tìm hiểu văn hóa Trung Quốc.)"],
+            ["Hiểu rõ", "明白", "míngbai", "我明白了。(Tôi hiểu rõ rồi.)"],
+            ["Bạn cùng phòng", "同屋", "tóngwū", "我的同屋很友好。(Bạn cùng phòng của tôi rất thân thiện.)"],
+            ["Đồng nghiệp", "同事", "tóngshì", "我和同事一起吃午饭。(Tôi và đồng nghiệp ăn trưa cùng nhau.)"],
+            ["Đá", "踢", "tī", "踢足球。(Đá bóng đá.)"],
+            ["Bóng đá", "足球", "zúqiú", "男生喜欢踢足球。(Con trai thích đá bóng đá.)"],
+            ["Tuy nhiên", "不过", "búguò", "很好，不过有点贵。(Rất tốt, tuy nhiên hơi đắt.)"],
+            ["Khá, tương đối", "比较", "bǐjiào", "今天比较冷。(Hôm nay tương đối lạnh.)"],
+            ["Hình dáng", "样子", "yàngzi", "衣服的样子很新颖。(Kiểu dáng quần áo rất mới lạ.)"],
+            ["Có vẻ như", "看样子", "kàn yàngzi", "看样子要下雨了。(Có vẻ như sắp mưa rồi.)"],
+            ["Dáng người", "个子", "gèzi", "他个子很高。(Dáng người anh ấy rất cao.)"],
+            ["Thấp", "矮", "ǎi", "我不算矮。(Tôi không tính là thấp.)"],
+            ["Chiều cao", "身高", "shēngāo", "我的身高是一米七。(Chiều cao của tôi là 1m70.)"],
+            ["Mét", "米", "mǐ", "一米八高。(Cao 1 mét 8.)"],
+            ["Centimet", "厘米", "límǐ", "五十厘米。(50 centimet.)"],
+            ["Cân nặng", "体重", "tǐzhòng", "体重保持得很好。(Cân nặng giữ rất tốt.)"],
+            ["Kilogram", "公斤", "gōngjīn", "六十公斤。(60 kilogram.)"],
+            ["Thân hình", "身材", "shēncái", "她的身材很好。(Thân hình cô ấy rất đẹp.)"],
+            ["Mắt", "眼睛", "yǎnjing", "大眼睛。(Đôi mắt lớn.)"],
+            ["Thị lực", "眼光", "yǎnguāng", "你的眼光真好。(Thị lực/con mắt nhìn của bạn thật tốt.)"],
+            ["Da", "皮肤", "pífū", "她的皮肤很白。(Da của cô ấy rất trắng.)"],
+            ["Tóc", "头发", "tóufa", "黑色的头发。(Mái tóc màu đen.)"],
+            ["Chi tiết", "详细", "xiángxì", "请详细说明。(Xin mô tả chi tiết.)"],
+            ["Trùng hợp", "巧", "qiǎo", "太巧了，在这里遇到你。(Thật trùng hợp, gặp bạn ở đây.)"],
+            ["Đẹp trai", "帅", "shuài", "他是一个帅哥。(Anh ấy là một mĩ nam đẹp trai.)"],
+            ["Tính cách", "性格", "xìnggé", "她的性格很热情。(Tính cách cô ấy rất nhiệt tình.)"],
+            ["Lớn lên", "长", "zhǎng", "他长得很漂亮。(Cô ấy lớn lên trông rất đẹp.)"],
+            ["Hỏng", "坏", "huài", "别吃坏了肚子。(Đừng ăn hỏng bụng đấy.)"],
+            ["Ốp lưng", "手机套", "Shǒujī tào", "买一个新手机套。(Mua một cái ốp lưng mới.)"],
+            ["Bộ sạc", "充电器", "chōngdiàn qì", "忘记带充电器了。(Quên mang bộ sạc rồi.)"],
+            ["Dây sạc", "充电线", "chōngdiàn xiàn", "一条白色的充电线。(Một sợi dây sạc màu trắng.)"],
+            ["Kính cường lực", "屏幕保护膜", "píngmù bǎohù mó", "贴一张屏幕保护膜。(Dán một tấm kính cường lực.)"],
+            ["Tai nghe", "耳机", "Ěrjī", "戴上耳机听音乐。(Đeo tai nghe nghe nhạc.)"],
+            ["Bàn phím máy tính", "键盘", "Jiànpán", "机械键盘。(Bàn phím cơ.)"],
+            ["Pin", "电池", "Diànchí", "更换新电池。(Thay pin mới.)"],
+            ["Màn hình", "屏幕", "Píngmù", "手机屏幕碎了。(Màn hình điện thoại bị vỡ rồi.)"],
+            ["Cài đặt", "设置", "Shèzhì", "进入手机设置。(Vào cài đặt điện thoại.)"],
+            ["Bluetooth", "兰芽", "lán yá", "打开蓝牙。(Bật Bluetooth.)"],
+            ["USB", "U盘", "U pán", "资料存在U盘里。(Tài liệu lưu trong USB.)"],
+            ["Không gọi được", "打不通", "dǎ bùtōng", "电话打不通。(Điện thoại gọi không được.)"],
+            ["Nhận điện thoại", "接电话", "jiē diànhuà", "请接电话。(Xin hãy nhận điện thoại.)"],
+            ["Đường dây bận", "占线", "Zhànxiàn", "对方电话占线。(Điện thoại đối phương đang bận.)"],
+            ["Danh bạ", "电话簿", "diànhuà bù", "查找电话簿。(Tra danh bạ.)"],
+            ["Thẻ điện thoại", "充值卡", "chōngzhí kǎ", "买一张充值卡。(Mua một thẻ điện thoại.)"],
+            ["Sim", "电话卡", "diànhuà kǎ", "办理一张电话卡。(Làm một chiếc SIM điện thoại.)"],
+            ["Khởi động lại", "重起", "chóng qǐ", "重新启动手机。(Khởi động lại điện thoại.)"],
+            ["Coppy", "复制", "Fùzhì", "复制这段文字。(Copy đoạn văn này.)"],
+            ["Dán", "粘贴", "Zhāntiē", "粘贴到这里。(Dán vào đây.)"],
+            ["Kích hoạt", "激活", "Jīhuó", "激活新卡。(Kích hoạt SIM mới.)"],
+            ["Kết nối", "连接", "Liánjiē", "连接网络。(Kết nối mạng.)"],
+            ["Mở máy", "开机", "Kāijī", "按按钮开机。(Bấm nút để mở máy.)"],
+            ["Tắt máy", "关机", "Guānjī", "睡觉前关机。(Tắt máy trước khi ngủ.)"],
+            ["Chuột máy tính", "鼠标", "Shǔbiāo", "无线鼠标。(Chuột máy tính không dây.)"],
+            ["Đậm, sâu", "深", "shēn", "深蓝色。(Màu xanh lam đậm.)"],
+            ["Phòng", "房间", "fángjiān", "我的房间很大。(Phòng của tôi rất lớn.)"],
+            ["Từ điển", "词典", "cídiǎn", "查电子词典。(Tra từ điển điện tử.)"],
+            ["Giảm giá", "打折", "dǎzhé", "商场正在打八折。(Trung tâm thương mại đang giảm giá 20%.)"],
+            ["Váy cưới", "婚纱", "hūnshā", "漂亮的婚纱。(Chiếc váy cưới đẹp.)"],
+            ["Ðồ đôi", "情侣装", "qínglǚ zhuāng", "穿情侣装。(Mặc đồ đôi.)"],
+            ["Áo dài", "奥黛", "ào dài", "越南传统奥黛。(Áo dài truyền thống Việt Nam.)"],
+            ["Sườn xám", "旗袍", "Qípáo", "中国传统旗袍。(Sườn xám truyền thống Trung Quốc.)"],
+            ["Ðồ ngủ", "睡衣", "shuìyī", "穿睡衣休息。(Mặc đồ ngủ nghỉ ngơi.)"],
+            ["Ðồ bơi", "游泳衣", "yóuyǒng yī", "买一套游泳衣。(Mua một bộ đồ bơi.)"],
+            ["Ðồng phục đi làm", "制服", "zhìfú", "工作制服。(Đồng phục đi làm.)"],
+            ["Ðồng phục trường", "校服", "Xiàofú", "学生穿校服。(Học sinh mặc đồng phục trường.)"],
+            ["Ðồ bảo hộ", "防护服", "fánghù fú", "穿防护服。(Mặc đồ bảo hộ.)"],
+            ["Khẩu trang", "口罩", "kǒuzhào", "出门戴口罩。(Ra ngoài đeo khẩu trang.)"],
+            ["Giày nữ", "女鞋", "nǚ xié", "女鞋专卖店。(Cửa hàng chuyên giày nữ.)"],
+            ["Giày nam", "男鞋", "nán xié", "皮质男鞋。(Giày nam bằng da.)"],
+            ["Giày đế bệt", "平底鞋", "píngdǐ xié", "穿平底鞋走路不累。(Đi giày đế bệt đi bộ không mệt.)"],
+            ["Dép lê", "拖鞋", "tuōxié", "在家穿拖鞋。(Ở nhà đi dép lê.)"],
+            ["Bốt", "靴子", "xuēzǐ", "皮靴子。(Bốt da.)"],
+            ["Dép quai hậu", "凉鞋", "liángxié", "夏天穿凉鞋。(Mùa hè đi dép quai hậu.)"],
+            ["Màu be", "灰棕色", "huī zōngsè", "灰棕色外套。(Áo khoác màu be/xám nâu.)"],
+            ["Màu tím", "紫色", "zǐsè", "紫色裙子。(Chiếc váy màu tím.)"],
+            ["Màu bạc", "银色", "yínsè", "银色手表。(Đồng hồ màu bạc.)"],
+            ["Màu nâu", "棕色", "zōngsè", "棕色皮鞋。(Giày da màu nâu.)"],
+            ["Màu xám", "灰色", "huīsè", "灰色裤子。(Quần màu xám.)"],
+            ["Màu trắng xám", "灰白色", "huībáisè", "灰白色的墙壁。(Bức tường màu trắng xám.)"],
+            ["Sắp xếp", "按排", "ānpái", "安排行程。(Sắp xếp hành trình.)"],
+            ["Phô tô", "打印", "dǎyīn", "打印资料。(In tài liệu.)"],
+            ["Tài liệu", "资料/文件", "zīliào/wénjiàn", "准备文件。(Chuẩn bị tài liệu.)"],
+            ["Việc nhà", "家务", "jiāwù", "做家务。(Làm việc nhà.)"],
+            ["Lực bất tòng tâm", "力不从心", "lìbùcóngxīn", "感到力不从心。(Cảm thấy lực bất tòng tâm.)"],
+            ["Từ chối", "拒绝", "jùjué", "拒绝邀请。(Từ chối lời mời.)"],
+            ["Mát mẻ", "凉快", "liángkuài", "秋天很凉快。(Mùa thu rất mát mẻ.)"],
+            ["Chơi game", "打游戏", "dǎyóuxì", "在电脑上打游戏。(Chơi game trên máy tính.)"],
+            ["Bí mật", "秘密", "Mìmì", "这是我们的秘密。(Đây là bí mật của chúng ta.)"],
+            ["Phần lớn", "大部分", "dàbùfèn", "大部分人同意。(Phần lớn mọi người đồng ý.)"],
+            ["Chết rồi, gay go rồi", "糟了", "zāo le", "糟了，我忘记带钱了！(Gay go rồi, tôi quên mang tiền rồi!)"],
+            ["Nói thẳng", "直说", "zhíshuō", "有什么想法就直说。(Có suy nghĩ gì cứ nói thẳng ra.)"],
+            ["Hiểu", "懂", "dǒng", "你懂我的意思吗？(Bạn có hiểu ý tôi không?)"],
+            ["Lãng phí", "浪费", "làngfèi", "不要浪费粮食。(Đừng lãng phí lương thực.)"],
+            ["Quyết định", "决定", "juédìng", "我已经做了决定。(Tôi đã đưa ra quyết định.)"],
+            ["Tin, tin rằng", "相信", "xiāngxìn", "我相信你。(Tôi tin bạn.)"],
+            ["Quan tâm", "在乎", "zàihū", "我很在乎你。(Tôi rất quan tâm/để tâm đến bạn.)"],
+            ["Kinh nghiệm", "经验", "jìngyàn", "工作经验。(Kinh nghiệm làm việc.)"],
+            ["Giận", "生气", "shēngqì", "别生气了。(Đừng giận nữa.)"],
+            ["Sắc mặt", "脸色", "liǎnsè", "你看上去脸色不太好。(Sắc mặt bạn trông không tốt lắm.)"],
+            ["Điên", "疯", "fèng", "你疯了吗？(Bạn điên rồi à?)"],
+            ["Say", "醉", "zuì", "他喝醉了。(Anh ấy uống say rồi.)"],
+            ["Nôn", "吐", "tù", "肚子不舒服想吐。(Bụng không dễ chịu muốn nôn.)"],
+            ["Tiếp tục", "继续", "jìxù", "继续努力。(Tiếp tục nỗ lực.)"],
+            ["Hình như", "好像", "hǎoxiàng", "好像要下雨了。(Hình như sắp mưa rồi.)"],
+            ["Khóa cửa", "锁门", "suǒmén", "出门前要锁门。(Trước khi ra ngoài phải khóa cửa.)"],
+            ["Dầu mỡ", "油腻", "yóunì", "菜太油腻了。(Món ăn dầu mỡ quá.)"],
+            ["Nhạt", "淡", "dàn", "汤有点儿淡。(Canh hơi nhạt một chút.)"],
+            ["Thối", "臭", "chòu", "臭豆腐。(Đậu phụ thối.)"],
+            ["Kiếm tiền", "转钱", "zhuānqián", "努力转钱/赚钱。(Nỗ lực kiếm tiền.)"],
+            ["Tấm lòng", "心意", "xīnmì", "这是我的一点心意。(Đây là một chút tấm lòng của tôi.)"],
+            ["Thuận lợi", "顺利", "shùnlì", "工作一切顺利。(Công việc mọi thứ thuận lợi.)"],
+            ["Hoàn thành", "完成", "wánchéng", "按时完成任务。(Hoàn thành nhiệm vụ đúng giờ.)"],
+            ["Thời tiết", "天气", "tiānqì", "今天天气很好。(Hôm nay thời tiết rất tốt.)"],
+            ["Nhiệt tình", "热情", "rèqíng", "热情招待客人。(Nhiệt tình tiếp đón khách.)"],
+            ["Thân thiện", "友好", "yǒuhǎo", "大家对我很友好。(Mọi người rất thân thiện với tôi.)"],
+            ["Thùng rác", "垃圾桶", "lājītǒng", "把垃圾扔进垃圾桶。(Vứt rác vào thùng rác.)"],
+            ["Vứt rác", "扔垃圾", "rēng lājī", "请不要乱扔垃圾。(Xin đừng vứt rác bừa bãi.)"],
+            ["Tắc đường", "堵车", "dǔchē", "路上又堵车了。(Trên đường lại tắc đường rồi.)"],
+            ["Áp lực", "压力", "yālì", "工作压力很大。(Áp lực công việc rất lớn.)"],
+            ["Ở cùng, bên cạnh", "配", "péi", "陪伴在身边。(Ở bên cạnh đồng hành.)"],
+            ["Suy nghĩ, xem xét", "考虑", "kǎolǜ", "我会好好考虑的。(Tôi sẽ suy nghĩ/xem xét kỹ.)"],
+            ["Bình thường", "平常", "píngcháng", "我平常喜欢看书。(Bình thường tôi thích đọc sách.)"],
+            ["Đặc biệt", "特别", "tèbié", "这个电影特别有意思。(Bộ phim này đặc biệt thú vị.)"],
+            ["Lười biếng", "偷懒", "tōulǎn", "不要偷懒。(Đừng lười biếng.)"],
+            ["Kém", "差", "chà", "成绩很差。(Thành tích rất kém.)"],
+            ["Thái độ", "态度", "tàidu", "工作态度很认真。(Thái độ làm việc rất chăm chỉ.)"],
+            ["Lần đầu tiên", "第一次", "dì yī cì", "第一次去中国。(Lần đầu tiên đi Trung Quốc.)"],
+            ["Đơn giản", "简单", "jiǎndān", "汉语语法很简单。(Ngữ pháp tiếng Trung rất đơn giản.)"],
+            ["Gửi email", "发邮件", "fā yóujiàn", "给经理发邮件。(Gửi email cho giám đốc.)"],
+            ["Đăng kí", "报名", "bàomíng", "报名参加汉语考试。(Đăng ký tham gia thi tiếng Trung.)"],
+            ["Hút thuốc", "抽烟", "chōu yān", "这里不能抽烟。(Ở đây không được hút thuốc.)"],
+            ["Quan trọng", "重要", "zhòngyào", "这件事情很重要。(Việc này rất quan trọng.)"],
+            ["Khóc", "哭", "kū", "别哭了。(Đừng khóc nữa.)"],
+            ["Đổi ca", "换班", "huàn bān", "我和同事换班。(Tôi và đồng nghiệp đổi ca.)"],
+            ["Kí túc xá", "宿舍", "sùshè", "住在学校宿舍。(Sống ở kí túc xá trường.)"],
+            ["Không đủ", "不够", "bú gòu", "时间不够用。(Thời gian không đủ dùng.)"],
+            ["Tự nhiên", "随便", "suíbiàn", "请随便吃。(Mời ăn tự nhiên.)"],
+            ["Suốt ngày", "整天", "zhěngtiān", "他整天玩手机。(Anh ấy suốt ngày chơi điện thoại.)"],
+            ["Phê bình", "批评", "pīpíng", "受到老师的批评。(Bị thầy giáo phê bình.)"],
+            ["Cẩu thả, qua loa", "马虎/粗心", "mǎhu", "做题不能马虎。(Làm bài không được qua loa.)"],
+            ["Thông báo", "通知", "tōngzhī", "接到开会通知。(Nhận được thông báo họp.)"],
+            ["Cảm động", "感动", "gǎndòng", "这个故事让人感动。(Câu chuyện này làm người ta cảm động.)"],
+            ["Công tác", "出差", "chūchāi", "他去北京出差了。(Anh ấy đi Bắc Kinh công tác rồi.)"],
+            ["Cử, phái", "派", "pài", "公司派我去上海。(Công ty cử tôi đi Thượng Hải.)"],
+            ["Thời gian rảnh", "空闲时间", "kòngxián shíjiān", "在空闲时间学习。(Học tập vào thời gian rảnh.)"],
+            ["Hời, rẻ", "便宜", "piányi", "这里的商品很便宜。(Hàng hóa ở đây rất rẻ.)"],
+            ["Giảm cân", "减肥", "jiǎnféi", "她正在减肥。(Cô ấy đang giảm cân.)"],
+            ["Tủ lạnh", "冰箱", "bīngxiāng", "把水果放在冰箱里。(Cho hoa quả vào trong tủ lạnh.)"],
+            ["Chăm chỉ", "认真", "rènzhēn", "认真听讲。(Chăm chỉ lắng nghe.)"],
+            ["Dáng người", "身材", "shēncái", "保持好身材。(Giữ dáng người đẹp.)"],
+            ["Tóc trắng", "白头发", "bái tóufa", "长出了白头发。(Mọc ra tóc trắng.)"],
+            ["Lùn", "矮", "ǎi", "我不算矮。(Tôi không tính là lùn.)"],
+            ["Tóc thẳng", "直发", "zhífà", "留着长长的直发。(Để mái tóc thẳng dài.)"],
+            ["Tóc xoăn", "卷发", "juǎnfà", "漂亮的卷发。(Mái tóc xoăn đẹp.)"],
+            ["Tiệm cắt tóc", "理发店", "lǐfàdiàn", "去理发店剪头发。(Đi tiệm cắt tóc cắt tóc.)"],
+            ["Dầu gội", "洗发水", "xǐfàshuǐ", "买瓶洗发水。(Mua chai dầu gội.)"],
+            ["Kính cận", "近视眼镜", "jìnshì yǎnjìng", "戴近视眼镜。(Đeo kính cận.)"],
+            ["Trang điểm", "化妆", "huàzhuāng", "出门前要化妆。(Trước khi ra ngoài phải trang điểm.)"],
+            ["Ngưỡng mộ", "羡慕", "xiànmù", "真羡慕你！(Thật ngưỡng mộ bạn!)"],
+            ["Giảng, kể, nói", "讲", "jiǎng", "老师讲得很好。(Thầy giáo giảng rất hay.)"],
+            ["Bằng lòng", "愿意", "yuànyì", "我愿意帮助你。(Tôi bằng lòng giúp đỡ bạn.)"],
+            ["Biểu diễn", "表演", "biǎoyǎn", "精彩的表演。(Màn biểu diễn đặc sắc.)"],
+            ["Tiết mục", "节目", "jiémù", "表演一个节目。(Biểu diễn một tiết mục.)"],
+            ["Nâng cao", "提高", "tígāo", "提高汉语水平。(Nâng cao trình độ tiếng Trung.)"],
+            ["Lưu loát", "流利", "liúlì", "说一口流利的汉语。(Nói một giọng tiếng Trung lưu loát.)"],
+            ["Kiên trì", "坚持", "jiānchí", "坚持每天练习。(Kiên trì luyện tập mỗi ngày.)"],
+            ["Luyện tập", "锻炼", "duànliàn", "坚持身体锻炼。(Kiên trì luyện tập thể dục.)"]
+        ];
+
+        // Process vocabulary list objects
+        const vocabData = vocabRaw.map((item, index) => ({
+            id: index + 1,
+            meaning: item[0],
+            hanzi: item[1],
+            pinyin: item[2],
+            ex: item[3]
+        }));
+
+        // 2. DỮ LIỆU BÀI TẬP DỊCH CÂU (30 CÂU - CHỈ DÙNG TỪ VỰNG TRONG BẢNG)
+        const translateData = [
+            { q: "1. Tôi có thể dùng máy tính của bạn một chút không?", a: "我可以用一下你的电脑吗？" },
+            { q: "2. Chiếc áo sơ mi này hơi nhỏ, có size L không?", a: "这件衬衫有点儿小，有L码吗？" },
+            { q: "3. Cuối tuần bạn dự định làm gì?", a: "周末你打算做什么？" },
+            { q: "4. Lần trước tôi cùng bạn thân đi Bắc Kinh du lịch.", a: "上次我和好朋友去北京旅游了。" },
+            { q: "5. Hoan nghênh bạn đến nhà tôi làm khách.", a: "欢迎你来我家做客。" },
+            { q: "6. Tôi muốn nạp tiền điện thoại.", a: "我要给手机充值。" },
+            { q: "7. Thân nhiệt của bạn là 38 độ, cần phải ăn thuốc.", a: "你的体温是38度，需要吃药。" },
+            { q: "8. Mời bạn đến tham gia tiệc sinh nhật của tôi.", a: "请你来参加我的生日聚会。" },
+            { q: "9. Bạn gái của tôi dáng người cao, da rất trắng.", a: "我的女朋友个子很高，皮肤很白。" },
+            { q: "10. Tiếng Trung của anh ấy nói rất lưu loát.", a: "他的汉语说得很流利。" },
+            { q: "11. Điện thoại của tôi hết điện rồi, mượn dây sạc của bạn nhé.", a: "我的手机没电了，借你的充电线用用。" },
+            { q: "12. Cửa hàng quần áo này đang giảm giá.", a: "这家服装店正在打折。" },
+            { q: "13. Không khí ở trên núi rất trong lành.", a: "山上的空气新鲜。" },
+            { q: "14. Vịt quay Bắc Kinh mầu vị rất ngon.", a: "北京烤鸭味道很好吃。" },
+            { q: "15. Hôm nay tôi mời khách, bạn đừng khách sáo.", a: "今天我请客，你别客气。" },
+            { q: "16. Nhập mật khẩu để đăng nhập hệ thống.", a: "输入密码登录系统。" },
+            { q: "17. Hôm nay tôi bị tiêu chảy, bụng rất đau.", a: "今天我拉肚子，肚子很疼。" },
+            { q: "18. Chúng ta quyết định vậy đi, 3 giờ gặp.", a: "我们就这么定吧，三点见。" },
+            { q: "19. Cô ấy có mái tóc xoăn rất đẹp.", a: "她有一头漂亮的卷发。" },
+            { q: "20. Hàng ngày kiên trì luyện tập thể dục.", a: "每天坚持身体锻炼。" },
+            { q: "21. Tôi đã quên số điện thoại của anh ấy rồi.", a: "我忘记了他的电话号码。" },
+            { q: "22. Cửa hàng giày ở đâu? Tôi muốn mua một đôi dép lê.", a: "鞋店在哪里？我想买一双拖鞋。" },
+            { q: "23. Tối nay tôi có hẹn hò cùng đồng nghiệp.", a: "今晚我和同事有约会。" },
+            { q: "24. Món Đậu phụ Tứ Xuyên này rất cay.", a: "这道麻婆豆腐很辣。" },
+            { q: "25. Môi trường ở quê nhà rất sạch sẽ.", a: "老家的环境很干净。" },
+            { q: "26. Tôi vừa mới nhận được một tin nhắn.", a: "我刚刚收到一条短信。" },
+            { q: "27. Đêm qua tôi bị sốt 39 độ.", a: "昨晚我发烧到了39度。" },
+            { q: "28. Cảm ơn bạn đã tặng quà, đây là tấm lòng của bạn.", a: "谢谢你送的礼物，这是你的一点心意。" },
+            { q: "29. Tính cách của bạn cùng phòng rất nhiệt tình.", a: "同屋的性格很热情。" },
+            { q: "30. Tôi bằng lòng giúp đỡ bạn nâng cao trình độ ngoại ngữ.", a: "我愿意帮助你提高外语水平。" }
+        ];
+
+        // 3. DỮ LIỆU BÀI TẬP ĐIỀN TỪ (30 CÂU - TỪ VỰNG TRONG BẢNG)
+        const fillData = [
+            { q: "1. 我可以___一下你的笔吗？", options: ["借", "买", "喝"], a: "借" },
+            { q: "2. 这件衬衫的___有点儿小。", options: ["尺寸", "颜色", "时间"], a: "尺寸" },
+            { q: "3. 周末你有什么___？", options: ["计划", "打算", "意思"], a: "打算" },
+            { q: "4. 我去过北京___。", options: ["旅游", "看病", "打字"], a: "旅游" },
+            { q: "5. 欢迎来到我家___。", options: ["做客", "请假", "验血"], a: "做客" },
+            { q: "6. 我要给手机___。", options: ["充值", "打折", "锁门"], a: "充值" },
+            { q: "7. 身体不舒服要去___看病。", options: ["医院", "商店", "图书馆"], a: "医院" },
+            { q: "8. 邀请你参加我的生日___。", options: ["聚会", "考试", "工作"], a: "聚会" },
+            { q: "9. 他的___很高，有一米八。", options: ["个子", "皮肤", "头发"], a: "个子" },
+            { q: "10. 他的汉语说得很___。", options: ["流利", "新鲜", "油腻"], a: "流利" },
+            { q: "11. 手机没电了，需要___。", options: ["充电", "洗手", "跑步"], a: "充电" },
+            { q: "12. 这家服装店正在___。", options: ["打折", "找钱", "开会"], a: "打折" },
+            { q: "13. 公园里的空气很___。", options: ["新鲜", "客气", "认真"], a: "新鲜" },
+            { q: "14. 北京烤鸭的___非常好。", options: ["味道", "环境", "态度"], a: "味道" },
+            { q: "15. 今天我请客，大家别___。", options: ["客气", "辛苦", "方便"], a: "客气" },
+            { q: "16. 请输入___登录账号。", options: ["密码", "名字", "号码"], a: "密码" },
+            { q: "17. 吃了不干净的东西容易___。", options: ["拉肚子", "头疼", "看病"], a: "拉肚子" },
+            { q: "18. 明天下午三点，不见不___。", options: ["散", "见", "去"], a: "散" },
+            { q: "19. 她留着一头漂亮的___。", options: ["卷发", "眼睛", "衣服"], a: "卷发" },
+            { q: "20. 坚持锻炼可以___身体。", options: ["提高", "增强", "锻炼"], a: "锻炼" },
+            { q: "21. 我___了他的电话号码。", options: ["忘记", "认识", "记得"], a: "忘记" },
+            { q: "22. 天气热了，想买一双___。", options: ["凉鞋", "大衣", "毛衣"], a: "凉鞋" },
+            { q: "23. 今晚我和同事有一个___。", options: ["约会", "面试", "开会"], a: "约会" },
+            { q: "24. 我怕辣，菜里别放太多___。", options: ["辣", "糖", "盐"], a: "辣" },
+            { q: "25. 这里的环境十分___。", options: ["干净", "热闹", "方便"], a: "干净" },
+            { q: "26. 请在手机上输入___。", options: ["验证码", "密码", "账号"], a: "验证码" },
+            { q: "27. 医生先帮我量了___。", options: ["体温", "身高", "体重"], a: "体温" },
+            { q: "28. 今天吃饭我们___吧。", options: ["AA制", "请客", "买单"], a: "AA制" },
+            { q: "29. 她的眼睛很大，___很白。", options: ["皮肤", "头发", "个子"], a: "皮肤" },
+            { q: "30. 只要___练习，汉语就会进步。", options: ["坚持", "放弃", "偷懒"], a: "坚持" }
+        ];
+
+        // 4. DỮ LIỆU HỘI THOẠI 10 CHỦ ĐỀ
+        const dialogues = [
+            {
+                title: "Chủ đề 1: Mượn điện thoại / máy tính người lạ",
+                lines: [
+                    { spk: "A", zh: "你好，不好意思打扰一下。我的手机没电了，能借用一下你的手机打个电话吗？", vi: "Xin chào, làm phiền chút. Điện thoại của tôi hết pin rồi, có thể cho tôi mượn gọi nhờ cuộc điện thoại không?" },
+                    { spk: "B", zh: "好的，没问题，给你用吧。", vi: "Được chứ, không vấn đề gì, cho bạn mượn này." },
+                    { spk: "A", zh: "太感谢你了！", vi: "Cảm ơn bạn rất nhiều!" }
+                ]
+            },
+            {
+                title: "Chủ đề 2: Đi cửa hàng mua quần áo, tìm kích cỡ",
+                lines: [
+                    { spk: "A", zh: "你好，我想买一件衬衫。这件有L码的尺寸吗？", vi: "Xin chào, tôi muốn mua một chiếc áo sơ mi. Mẫu này có size L không?" },
+                    { spk: "B", zh: "有的，请稍等，我帮您拿合适的尺寸试一下。", vi: "Có ạ, xin đợi chút, tôi lấy kích cỡ phù hợp cho bạn thử nhé." },
+                    { spk: "A", zh: "好的，谢谢老板娘。", vi: "Được, cảm ơn bà chủ." }
+                ]
+            },
+            {
+                title: "Chủ đề 3: Kế hoạch cuối tuần",
+                lines: [
+                    { spk: "A", zh: "这个周末你有什么打算？", vi: "Cuối tuần này bạn có dự định gì?" },
+                    { spk: "B", zh: "我打算和朋友一起去图书馆看书，然后去打球。", vi: "Tôi dự định cùng bạn đi thư viện đọc sách, sau đó đi chơi bóng." },
+                    { spk: "A", zh: "听起来很不错！", vi: "Nghe có vẻ rất hay!" }
+                ]
+            },
+            {
+                title: "Chủ đề 4: Kỷ niệm 1 lần đi du lịch",
+                lines: [
+                    { spk: "A", zh: "上次你去哪里旅游了？", vi: "Lần trước bạn đi du lịch ở đâu?" },
+                    { spk: "B", zh: "我和好朋友去了北京，我们参观了故宫，还吃了烤鸭。", vi: "Tôi và bạn thân đã đi Bắc Kinh, thăm Cố Cung và ăn vịt quay." },
+                    { spk: "A", zh: "那里风景好吗？", vi: "Phong cảnh ở đó tốt không?" },
+                    { spk: "B", zh: "风景美极了，我们玩得很高兴。", vi: "Phong cảnh đẹp cực kỳ, chúng tôi chơi rất vui." }
+                ]
+            },
+            {
+                title: "Chủ đề 5: Đến nhà bạn làm khách",
+                lines: [
+                    { spk: "A", zh: "欢迎欢迎！快请进！", vi: "Hoan nghênh hoan nghênh! Mau mời vào!" },
+                    { spk: "B", zh: "这是给你的礼物，给你添麻烦了。", vi: "Đây là quà tặng bạn, đã làm phiền bạn rồi." },
+                    { spk: "A", zh: "太客气了，快坐，尝尝今天做麻婆豆腐。", vi: "Khách sáo quá, mau ngồi, nếm thử Đậu phụ Tứ Xuyên hôm nay nhé." }
+                ]
+            },
+            {
+                title: "Chủ đề 6: Nạp tiền điện thoại",
+                lines: [
+                    { spk: "A", zh: "你好，我要给手机卡充值。", vi: "Xin chào, tôi muốn nạp tiền cho thẻ điện thoại." },
+                    { spk: "B", zh: "请问充值多少钱？", vi: "Cho hỏi nạp bao nhiêu tiền ạ?" },
+                    { spk: "A", zh: "充值一百块，我可以微信扫码转账吗？", vi: "Nạp 100 tệ, tôi có thể quét mã chuyển khoản WeChat không?" },
+                    { spk: "B", zh: "可以的，请扫这里。", vi: "Được ạ, xin quét ở đây." }
+                ]
+            },
+            {
+                title: "Chủ đề 7: Bị bệnh đi bệnh viện khám bệnh",
+                lines: [
+                    { spk: "A", zh: "医生，我肚子很疼，还拉肚子。", vi: "Bác sĩ, bụng tôi rất đau, còn bị tiêu chảy nữa." },
+                    { spk: "B", zh: "先量一下体温，昨天吃了什么东西？", vi: "Trước tiên đo thân nhiệt chút đã, hôm qua bạn ăn gì rồi?" },
+                    { spk: "A", zh: "昨天喝了冷牛奶。", vi: "Hôm qua tôi uống sữa bò lạnh." },
+                    { spk: "B", zh: "这是肠胃炎，我给你开点药，一天吃三顿。", vi: "Đây là viêm dạ dày ruột, tôi kê cho bạn chút thuốc, một ngày uống 3 bữa." }
+                ]
+            },
+            {
+                title: "Chủ đề 8: Mời tham gia buổi tiệc sinh nhật",
+                lines: [
+                    { spk: "A", zh: "下周六是我的生日，我想邀请你参加我的生日聚会。", vi: "Thứ 7 tuần sau là sinh nhật tôi, tôi muốn mời bạn tham gia buổi tiệc sinh nhật." },
+                    { spk: "B", zh: "太好了！在什么地方？几点开始？", vi: "Tuyệt quá! Ở địa điểm nào? Mấy giờ bắt đầu?" },
+                    { spk: "A", zh: "晚上七点在市中心的饭店，不见不散！", vi: "7 giờ tối tại nhà hàng ở trung tâm thành phố, không gặp không về!" }
+                ]
+            },
+            {
+                title: "Chủ đề 9: Miêu tả 1 người bạn",
+                lines: [
+                    { spk: "A", zh: "你的好朋友长什么样子？", vi: "Bạn thân của bạn trông như thế nào?" },
+                    { spk: "B", zh: "他个子很高，大眼睛，留着短发，长得很帅。", vi: "Anh ấy dáng người cao, mắt to, để tóc ngắn, trông rất đẹp trai." },
+                    { spk: "A", zh: "他的性格怎么样？", vi: "Tính cách của anh ấy thế nào?" },
+                    { spk: "B", zh: "性格很热情，也非常喜欢帮助别人。", vi: "Tính cách rất nhiệt tình, cũng rất thích giúp đỡ người khác." }
+                ]
+            },
+            {
+                title: "Chủ đề 10: Khả năng ngoại ngữ",
+                lines: [
+                    { spk: "A", zh: "你会说外语吗？", vi: "Bạn biết nói ngoại ngữ không?" },
+                    { spk: "B", zh: "我会说汉语，但是说得不太流利。", vi: "Tôi biết nói tiếng Trung, nhưng nói chưa lưu loát lắm." },
+                    { spk: "A", zh: "你学习汉语多久了？", vi: "Bạn học tiếng Trung bao lâu rồi?" },
+                    { spk: "B", zh: "我已经坚持学习一年了，每天都认真练习。", vi: "Tôi đã kiên trì học 1 năm rồi, mỗi ngày đều chăm chỉ luyện tập." }
+                ]
+            }
+        ];
+
+        // 5. DỮ LIỆU BÀI VĂN MẪU 10 CHỦ ĐỀ
+        const essays = [
+            {
+                title: "Bài văn 1: Mượn điện thoại / máy tính người lạ (借用手机与电脑)",
+                zh: "有一天在路上，我的手机突然没电关机了，可是我有急事需要联系同事。我看见一位好心的陌生人，就走过去客气地问他能不能借用一下手机。他非常热情，立刻把手机借给了我。后来为了打印一份重要的资料，我还借用了他的电脑。我很感谢他的帮助，这让我感到十分温暖。",
+                pinyin: "Yǒu yì tiān zài lù shang, wǒ de shǒujī tūrán méi diàn guānjī le, kěshì wǒ yǒu jíshì xūyào liánxì tóngshì. Wǒ kànjiàn yí wèi hǎoxīn de mòshēngrén, jiù zǒu guòqù kèqi de wèn tā néng bù néng jièyòng yíxià shǒujī. Tā fēicháng rèqíng, lìkè bǎ shǒujī jiègěile wǒ...",
+                vi: "Một ngày nọ trên đường, điện thoại của tôi đột nhiên hết pin tắt máy, nhưng tôi có việc gấp cần liên lạc đồng nghiệp. Tôi thấy một người lạ tốt bụng, liền đi đến khách sáo hỏi anh ấy có thể mượn nhờ điện thoại một chút không. Anh ấy rất nhiệt tình, lập tức cho tôi mượn điện thoại. Sau đó để in một tài liệu quan trọng, tôi còn mượn dùng máy tính của anh ấy. Tôi rất cảm ơn sự giúp đỡ của anh ấy, điều này khiến tôi cảm thấy vô cùng ấm áp."
+            },
+            {
+                title: "Bài văn 2: Đi cửa hàng mua quần áo (去服装店买衣服)",
+                zh: "周末我和朋友去市中心的服装店购物。这家店的衣服很多，样式也很漂亮。我挑了一件蓝色的衬衫，但是尺寸有点儿小。我问老板娘有没有大一码的尺寸，她非常热情地帮我拿了一件L码的。我试穿了一下，非常合适。正好商店在打折，价格很便宜，我高兴地买下了它。",
+                pinyin: "Zhōumò wǒ hé péngyǒu qù shìzhōngxīn de fúzhuāngdiàn gòuwù. Zhè jiā diàn de yīfu hěn duō, yàngshì yě hěn piàoliang...",
+                vi: "Cuối tuần tôi và bạn đi trung tâm thương mại mua sắm quần áo. Cửa hàng này quần áo rất nhiều, kiểu dáng cũng đẹp. Tôi chọn một chiếc áo sơ mi màu xanh lam, nhưng kích cỡ hơi nhỏ. Tôi hỏi bà chủ xem có cỡ to hơn một size không, cô ấy nhiệt tình lấy cho tôi size L. Tôi thử vào thấy rất hợp. Vừa hay cửa hàng đang giảm giá, giá rất rẻ, tôi vui vẻ mua nó."
+            },
+            {
+                title: "Bài văn 3: Kế hoạch cuối tuần (周末的计划)",
+                zh: "这个周末我有很多计划。星期六上午我打算打扫房间，把衣服洗干净。下午我和朋友约好了去图书馆看书，准备下周的汉语考试。星期天如果天气好的话，我们打算去郊区爬山，看风景，放松一下。晚上一起吃顿饭，聊天儿。我觉得这样的周末安排非常有意思。",
+                pinyin: "Zhège zhōumò wǒ yǒu hěn duō jìhuà. Xīngqīliù shàngwǔ wǒ dǎsuàn dǎsǎo fángjiān, bǎ yīfu xǐ gānjìng...",
+                vi: "Cuối tuần này tôi có nhiều kế hoạch. Sáng thứ 7 tôi dự định dọn dẹp phòng, giặt quần áo sạch sẽ. Chiều tôi hẹn bạn đi thư viện đọc sách, chuẩn bị cho bài thi tiếng Trung tuần sau. Chủ nhật nếu thời tiết tốt, chúng tôi dự định đi ngoại ô leo núi, ngắm cảnh, thư giãn. Tối đến ăn cơm cùng nhau và trò chuyện. Tôi cảm thấy sắp xếp cuối tuần như vậy rất thú vị."
+            },
+            {
+                title: "Bài văn 4: Kỷ niệm 1 lần đi du lịch (一次难忘的旅游)",
+                zh: "去年夏天，我和好朋友一起去北京旅游了。我们去了长城和故宫，那里的风景美极了。我们还去看了大熊猫，拍了很多照片。晚上我们去饭店吃了著名的北京烤鸭，味道真不错。这次旅游虽然有点儿累，但是我们玩得非常开心，这是一次难忘的经历。",
+                pinyin: "Qùnián xiàtiān, wǒ hé hǎo péngyǒu yìqǐ qù Běijīng lǚyóu le. Wǒmen qùle Chángchéng hé Gùgōng...",
+                vi: "Mùa hè năm ngoái, tôi cùng bạn thân đã đi du lịch Bắc Kinh. Chúng tôi đã đi Vạn Lý Trường Thành và Cố Cung, phong cảnh ở đó đẹp cực kỳ. Chúng tôi còn đi xem gấu trúc, chụp rất nhiều ảnh. Buổi tối chúng tôi đến nhà hàng ăn món vịt quay Bắc Kinh nổi tiếng, mùi vị thật sự không tồi. Chuyến du lịch lần này tuy hơi mệt, nhưng chúng tôi chơi rất vui vẻ, đây là một trải nghiệm khó quên."
+            },
+            {
+                title: "Bài văn 5: Đến nhà bạn làm khách (去朋友家做客)",
+                zh: "昨天我受邀去中国朋友家做客。进门前我先敲门，朋友和他的爱人热烈地欢迎我。我带了一些水果和红酒作为礼物。朋友做了一桌丰富的菜，有麻婆豆腐和糖醋鱼，味道非常美味。我们一边吃饭一边聊天儿，度过了一个愉快的晚上。离开时我感谢了他们的热情招待。",
+                pinyin: "Zuótiān wǒ shòuyāo qù Zhōngguó péngyǒu jiā zuòkè. Jìnmén qián wǒ xiān qiāomén...",
+                vi: "Hôm qua tôi được mời đến nhà người bạn Trung Quốc làm khách. Trước khi vào tôi gõ cửa, bạn và vợ anh ấy nhiệt liệt hoan nghênh tôi. Tôi mang theo chút hoa quả và rượu vang làm quà. Bạn tôi làm một mâm thức ăn phong phú, có Đậu phụ Tứ Xuyên và Cá chua ngọt, mùi vị cực kỳ ngon. Chúng tôi vừa ăn vừa trò chuyện, trải qua một buổi tối vui vẻ. Lúc về tôi cảm ơn sự tiếp đón nhiệt tình của họ."
+            },
+            {
+                title: "Bài văn 6: Nạp tiền điện thoại (给手机充值)",
+                zh: "今天我的手机欠费了，不能上网也不能打电话。我来到附近的商店给手机卡充值。因为我没有带现金，所以我问服务员能不能用微信转账。服务员非常友好，让我扫码支付。输入密码后，充值很快就成功了。现在我的手机又可以正常使用了，非常方便。",
+                pinyin: "Jīntiān wǒ de shǒujī qiànfèi le, bù néng shàngwǎng yě bù néng dǎ diànhuà. Wǒ láidào fùjìn de shāngdiàn...",
+                vi: "Hôm nay điện thoại của tôi hết tiền, không thể lên mạng cũng không thể gọi điện. Tôi đến cửa hàng gần đó nạp tiền thẻ điện thoại. Vì không mang tiền mặt, tôi hỏi nhân viên có thể dùng chuyển khoản WeChat không. Nhân viên rất thân thiện, bảo tôi quét mã thanh toán. Sau khi nhập mật khẩu, nạp tiền liền thành công nhanh chóng. Bây giờ điện thoại tôi lại dùng bình thường được rồi, rất tiện lợi."
+            },
+            {
+                title: "Bài văn 7: Đi bệnh viện khám bệnh (去医院看病)",
+                zh: "昨天半夜我的肚子突然很疼，还拉肚子。今天早上我不得不向公司请假，去医院看医生。医生先帮我量了体温，然后让我去验血。医生说我是得了急性肠胃炎，病情并不严重，是因为吃了不干净的食物。医生给我开了点药，让我按时吃药，多喝热水，好好休息。",
+                pinyin: "Zuótiān bànyè wǒ de dùzi tūrán hěn téng, hái lādùzi. Jīntiān zǎoshang wǒ bùdébù xiàng gōngsī qǐngjià...",
+                vi: "Nửa đêm hôm qua bụng tôi đột nhiên rất đau, còn bị tiêu chảy. Sáng nay tôi đành phải xin nghỉ ở công ty để đi bệnh viện khám bác sĩ. Bác sĩ trước tiên đo thân nhiệt cho tôi, sau đó bảo tôi đi xét nghiệm máu. Bác sĩ nói tôi bị viêm dạ dày ruột cấp tính, bệnh không nghiêm trọng, là do ăn thức ăn không sạch. Bác sĩ kê cho tôi ít thuốc, bảo tôi uống thuốc đúng giờ, uống nhiều nước ấm, nghỉ ngơi thật tốt."
+            },
+            {
+                title: "Bài văn 8: Mời tham gia tiệc sinh nhật (邀请参加生日聚会)",
+                zh: "下周六是我的二十岁生日，我打算举办一个生日聚会。我已经向很多好朋友和同事发了短信，邀请他们来参加。聚会地点定在市中心的一家饭店，我已经提前预订了位置。到时候我们会一起吃生日蛋糕，唱歌，打游戏。我相信大家一定会过得开心！",
+                pinyin: "Xià zhōuliù shì wǒ de èrshí suì shēngrì, wǒ dǎsuàn jǔbàn yí ge shēngrì jùhuì...",
+                vi: "Thứ 7 tuần sau là sinh nhật 20 tuổi của tôi, tôi dự định tổ chức một buổi tiệc sinh nhật. Tôi đã gửi tin nhắn cho nhiều bạn tốt và đồng nghiệp, mời họ đến tham gia. Địa điểm tiệc đặt ở nhà hàng tại trung tâm thành phố, tôi đã đặt bàn trước. Đến lúc đó chúng tôi sẽ cùng nhau ăn bánh sinh nhật, hát hò, chơi game. Tôi tin mọi người nhất định sẽ chơi rất vui!"
+            },
+            {
+                title: "Bài văn 9: Miêu tả một người bạn (介绍我的好朋友)",
+                zh: "我想介绍我的好朋友，他叫小明。他的个子很高，有一米八，身材很好。他有一双大眼睛，留着黑色的短发，长得很帅。小明的性格非常热情和友好，很喜欢帮助别人。在空闲时间，他喜欢跑步和踢足球。大家都很喜欢他，我也很珍惜我们的友谊。",
+                pinyin: "Wǒ xiǎng jièshào wǒ de hǎo péngyǒu, tā jiào Xiǎomíng. Tā de gèzi hěn gāo, yǒu yì mǐ bā...",
+                vi: "Tôi muốn giới thiệu người bạn thân của tôi, anh ấy tên Tiểu Minh. Dáng người anh ấy rất cao, 1m80, thân hình đẹp. Anh ấy có đôi mắt to, mái tóc ngắn màu đen, trông rất đẹp trai. Tính cách Tiểu Minh rất nhiệt tình và thân thiện, rất thích giúp đỡ người khác. Khi có thời gian rảnh, anh ấy thích chạy bộ và đá bóng. Mọi người đều rất thích anh ấy, tôi cũng rất quý trọng tình bạn của chúng tôi."
+            },
+            {
+                title: "Bài văn 10: Khả năng ngoại ngữ (我的外语能力)",
+                zh: "学习外语对我来说非常重要。我正在努力学习汉语，虽然汉字有点儿难写，但是我认为很有意思。现在我能听懂一些简单的句子，也能用汉语和中国人聊天儿。为了提高水平，我每天坚持听录音，认真做练习。我相信只要坚持，我的汉语一定会越来越流利。",
+                pinyin: "Xuéxí wàiyǔ duì wǒ lái shuō fēicháng zhòngyào. Wǒ zhèngzài nǔlì xuéxí Hànyǔ...",
+                vi: "Học ngoại ngữ đối với tôi mà nói rất quan trọng. Tôi đang nỗ lực học tiếng Trung, tuy chữ Hán hơi khó viết, nhưng tôi cho rằng rất thú vị. Bây giờ tôi có thể nghe hiểu một số câu đơn giản, cũng có thể dùng tiếng Trung giao tiếp với người Trung Quốc. Để nâng cao trình độ, mỗi ngày tôi kiên trì nghe đĩa, chăm chỉ làm bài tập. Tôi tin rằng chỉ cần kiên trì, tiếng Trung của tôi nhất định sẽ càng ngày càng lưu loát."
+            }
+        ];
+
+        // Speech Engine
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'zh-CN';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ tính năng đọc tiếng Trung.");
+            }
+        }
+
+        // Render Vocab Table
+        function renderVocab() {
+            const tbody = document.getElementById('vocab-list');
+            tbody.innerHTML = vocabData.map((v) => `
+                <tr>
+                    <td>${v.id}</td>
+                    <td class="chinese-text">${v.hanzi}</td>
+                    <td style="color: var(--accent-purple); font-weight: 600;">${v.pinyin}</td>
+                    <td>${v.meaning}</td>
+                    <td style="color: #475569; font-size: 14px;">${v.ex}</td>
+                    <td><button class="audio-btn" onclick="speak('${v.hanzi}')">🔊</button></td>
+                </tr>
+            `).join('');
+        }
+
+        // Flashcard Mechanics
+        let currentFcIndex = 0;
+        function updateCard() {
+            const card = vocabData[currentFcIndex];
+            document.getElementById('fc-hanzi').innerText = card.hanzi;
+            document.getElementById('fc-pinyin').innerText = card.pinyin;
+            document.getElementById('fc-meaning').innerText = card.meaning;
+            document.getElementById('fc-ex').innerText = "Ví dụ: " + card.ex;
+            document.getElementById('fc-counter').innerText = `${currentFcIndex + 1} / ${vocabData.length}`;
+            document.querySelector('.flashcard').classList.remove('flipped');
+        }
+
+        function flipCard(el) { el.classList.toggle('flipped'); }
+        function nextCard() { if (currentFcIndex < vocabData.length - 1) { currentFcIndex++; updateCard(); } }
+        function prevCard() { if (currentFcIndex > 0) { currentFcIndex--; updateCard(); } }
+        function speakCurrentCard() { speak(vocabData[currentFcIndex].hanzi); }
+
+        // Render Quizzes
+        function renderQuizzes() {
+            const transContainer = document.getElementById('translate-quiz');
+            transContainer.innerHTML = translateData.map((item, idx) => `
+                <div class="quiz-item">
+                    <div class="quiz-question">${item.q}</div>
+                    <input type="text" class="quiz-input" id="trans-inp-${idx}" placeholder="Nhập chữ Hán...">
+                    <button class="btn" onclick="checkTrans(${idx}, '${item.a}')">Kiểm tra</button>
+                    <div class="quiz-result" id="trans-res-${idx}"></div>
+                </div>
+            `).join('');
+
+            const fillContainer = document.getElementById('fill-quiz');
+            fillContainer.innerHTML = fillData.map((item, idx) => `
+                <div class="quiz-item">
+                    <div class="quiz-question">${item.q}</div>
+                    <div style="margin-bottom: 8px; color: var(--text-muted); font-size: 14px;">Lựa chọn: <b>[ ${item.options.join(' / ')} ]</b></div>
+                    <input type="text" class="quiz-input" id="fill-inp-${idx}" placeholder="Nhập đáp án...">
+                    <button class="btn" onclick="checkFill(${idx}, '${item.a}')">Kiểm tra</button>
+                    <div class="quiz-result" id="fill-res-${idx}"></div>
+                </div>
+            `).join('');
+        }
+
+        function checkTrans(idx, ans) {
+            const userInp = document.getElementById(`trans-inp-${idx}`).value.trim();
+            const resEl = document.getElementById(`trans-res-${idx}`);
+            resEl.style.display = 'block';
+            if (userInp === ans) {
+                resEl.className = 'quiz-result correct';
+                resEl.innerText = '✓ Chính xác!';
+            } else {
+                resEl.className = 'quiz-result incorrect';
+                resEl.innerText = `✕ Chưa đúng. Đáp án chuẩn: ${ans}`;
+            }
+        }
+
+        function checkFill(idx, ans) {
+            const userInp = document.getElementById(`fill-inp-${idx}`).value.trim();
+            const resEl = document.getElementById(`fill-res-${idx}`);
+            resEl.style.display = 'block';
+            if (userInp === ans) {
+                resEl.className = 'quiz-result correct';
+                resEl.innerText = '✓ Chính xác!';
+            } else {
+                resEl.className = 'quiz-result incorrect';
+                resEl.innerText = `✕ Chưa đúng. Đáp án đúng là: ${ans}`;
+            }
+        }
+
+        // Render Dialogues & Essays
+        function renderDialogues() {
+            const container = document.getElementById('dialogue-container');
+            container.innerHTML = dialogues.map((d) => `
+                <div style="margin-bottom: 24px;">
+                    <h3 style="margin-bottom: 12px; color: #1e1b4b;">${d.title}</h3>
+                    ${d.lines.map((l) => `
+                        <div class="dialogue-bubble">
+                            <div class="speaker">${l.spk}: <button class="audio-btn" onclick="speak('${l.zh}')">🔊</button></div>
+                            <div class="chinese-text" style="font-size: 16px;">${l.zh}</div>
+                            <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">${l.vi}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+
+        function renderEssays() {
+            const container = document.getElementById('essay-container');
+            container.innerHTML = essays.map((e, i) => `
+                <div style="margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+                    <h3 style="margin-bottom: 10px; color: #1e1b4b;">${e.title}</h3>
+                    <div style="margin-bottom: 12px;">
+                        <button class="btn" style="padding: 6px 14px; font-size: 13px;" onclick="speak('${e.zh.replace(/'/g, "\\'")}')">🔊 Đọc bài văn mẫu</button>
+                    </div>
+                    <p class="chinese-text" style="font-size: 17px; line-height: 1.8; margin-bottom: 12px;">${e.zh}</p>
+                    <button class="toggle-btn" onclick="toggleEssayDetails(${i})">Hiện/Ẩn phiên âm & dịch nghĩa</button>
+                    <div id="essay-detail-${i}" class="hidden-content">
+                        <p style="color: var(--accent-purple); font-weight: 600; margin-bottom: 8px;"><b>Phiên âm:</b> ${e.pinyin}</p>
+                        <p style="color: #334155;"><b>Dịch nghĩa:</b> ${e.vi}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleEssayDetails(idx) {
+            const el = document.getElementById(`essay-detail-${idx}`);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Navigation Bar
+        function switchTab(tabId) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Init App
+        window.onload = function() {
+            renderVocab();
+            updateCard();
+            renderQuizzes();
+            renderDialogues();
+            renderEssays();
+        };
+    </script>
+</body>
+</html>
